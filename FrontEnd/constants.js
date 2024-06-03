@@ -4,7 +4,7 @@ import { StyleSheet } from "react-native";
 const constantStyles = StyleSheet.create({
     safeArea: {
         flex: 1,
-        backgroundColor: 'black',
+        backgroundColor: '#1cb0f6',
     },
     logoText: {
         color: "white",
@@ -19,6 +19,11 @@ const constantStyles = StyleSheet.create({
         padding: 16,
         width: 360,
         borderRadius: 16,
+        shadowColor: 'black',
+        shadowOffset: { width: 3, height: 3 },
+        shadowOpacity: 1,
+        shadowRadius: 0,
+
     },
     btnText: {
         alignSelf: 'center',
@@ -30,8 +35,8 @@ const constantStyles = StyleSheet.create({
         fontFamily: "Nunito-Black"
     },
     lightGrayText: {
-        color: "#939393",
-        textAlign:'center',
+        color: "white",
+        textAlign: 'center',
         fontFamily: "Nunito-Black"
     }
 });
