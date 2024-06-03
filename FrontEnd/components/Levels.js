@@ -4,6 +4,7 @@ import constants from "./constants";
 
 
 export default function HomeScreen({ navigation }) {
+
   return (
     <SafeAreaView style={[constants.safeArea, { justifyContent: "space-between" }]}>
       <Text style={constants.logoText}>Levels 🪜</Text>

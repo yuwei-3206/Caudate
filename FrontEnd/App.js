@@ -10,10 +10,10 @@ import * as Font from 'expo-font';
 
 //create a stack navigator
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import Levels from './Levels';
-import HomeScreen from './HomeScreen';
-import Game from './Game';
-import Score from './Score';
+import Levels from './components/Levels';
+import HomeScreen from './components/HomeScreen';
+import Game from './components/Game';
+import Score from './components/Score';
 
 
 SplashScreen.preventAutoHideAsync();
