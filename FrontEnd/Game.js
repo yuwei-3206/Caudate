@@ -2,6 +2,9 @@ import React from "react";
 import { View, Text, Image, TouchableOpacity } from "react-native";
 import { Button } from 'react-native-paper';
 
+const simplelist = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+const randlist = simplelist.sort(() => Math.random() - 0.5)
+
 
 export default function HomeScreen({ navigation }) {
 
@@ -14,10 +17,14 @@ export default function HomeScreen({ navigation }) {
   const intervalRef = React.useRef(null); 
   const startTimeRef = React.useRef(0); 
 
+  
+
 
 
   const onePress = () => 
   {
+    if(randlist[0]==1)
+    {
     setProgress(1)
     
     startTimeRef.current = Date.now() - time * 1000; 
@@ -26,6 +33,44 @@ export default function HomeScreen({ navigation }) {
             startTimeRef.current) / 1000)); 
         }, 1000); 
         setRunning(true);
+    }
+    else if(progress==1)
+    {
+      setProgress(2)
+    }
+    else if(progress==2)
+    {
+      setProgress(3)
+    }
+    else if(progress==3)
+    {
+      setProgress(4)
+    }
+    else if(progress==4)
+    {
+      setProgress(5)
+    }
+    else if(progress==5)
+    {
+      setProgress(6)
+    }
+    else if(progress==6)
+    {
+      setProgress(7)
+    }
+    else if(progress==7)
+    {
+      setProgress(8)
+    }
+    else if(progress==8)
+    {
+      setProgress(9)
+      setResult("Complete!")
+
+        clearInterval(intervalRef.current); 
+        setRunning(false); 
+    }
+   
 
 
     
@@ -36,65 +81,404 @@ export default function HomeScreen({ navigation }) {
   }
   const twoPress = () => 
   {
-    if(progress==1)
+    if(randlist[1]==1)
+    {
+    setProgress(1)
+    
+    startTimeRef.current = Date.now() - time * 1000; 
+        intervalRef.current = setInterval(() => { 
+            setTime(Math.floor((Date.now() -  
+            startTimeRef.current) / 1000)); 
+        }, 1000); 
+        setRunning(true);
+    }
+    else if(progress==1)
     {
       setProgress(2)
-      
+    }
+    else if(progress==2)
+    {
+      setProgress(3)
+    }
+    else if(progress==3)
+    {
+      setProgress(4)
+    }
+    else if(progress==4)
+    {
+      setProgress(5)
+    }
+    else if(progress==5)
+    {
+      setProgress(6)
+    }
+    else if(progress==6)
+    {
+      setProgress(7)
+    }
+    else if(progress==7)
+    {
+      setProgress(8)
+    }
+    else if(progress==8)
+    {
+      setProgress(9)
+      setResult("Complete!")
+
+        clearInterval(intervalRef.current); 
+        setRunning(false); 
     }
  
   }
   const threePress = () => 
   {
-    if(progress==2)
+    if(randlist[2]==1)
+    {
+    setProgress(1)
+    
+    startTimeRef.current = Date.now() - time * 1000; 
+        intervalRef.current = setInterval(() => { 
+            setTime(Math.floor((Date.now() -  
+            startTimeRef.current) / 1000)); 
+        }, 1000); 
+        setRunning(true);
+    }
+    else if(progress==1)
+    {
+      setProgress(2)
+    }
+    else if(progress==2)
     {
       setProgress(3)
+    }
+    else if(progress==3)
+    {
+      setProgress(4)
+    }
+    else if(progress==4)
+    {
+      setProgress(5)
+    }
+    else if(progress==5)
+    {
+      setProgress(6)
+    }
+    else if(progress==6)
+    {
+      setProgress(7)
+    }
+    else if(progress==7)
+    {
+      setProgress(8)
+    }
+    else if(progress==8)
+    {
+      setProgress(9)
+      setResult("Complete!")
+
+        clearInterval(intervalRef.current); 
+        setRunning(false); 
     }
  
   }
   const fourPress = () => 
   {
-    if(progress==3)
+    if(randlist[3]==1)
+    {
+    setProgress(1)
+    
+    startTimeRef.current = Date.now() - time * 1000; 
+        intervalRef.current = setInterval(() => { 
+            setTime(Math.floor((Date.now() -  
+            startTimeRef.current) / 1000)); 
+        }, 1000); 
+        setRunning(true);
+    }
+    else if(progress==1)
+    {
+      setProgress(2)
+    }
+    else if(progress==2)
+    {
+      setProgress(3)
+    }
+    else if(progress==3)
     {
       setProgress(4)
+    }
+    else if(progress==4)
+    {
+      setProgress(5)
+    }
+    else if(progress==5)
+    {
+      setProgress(6)
+    }
+    else if(progress==6)
+    {
+      setProgress(7)
+    }
+    else if(progress==7)
+    {
+      setProgress(8)
+    }
+    else if(progress==8)
+    {
+      setProgress(9)
+      setResult("Complete!")
+
+        clearInterval(intervalRef.current); 
+        setRunning(false); 
     }
  
   }
   const fivePress = () => 
   {
-    if(progress==4)
+    if(randlist[4]==1)
+    {
+    setProgress(1)
+    
+    startTimeRef.current = Date.now() - time * 1000; 
+        intervalRef.current = setInterval(() => { 
+            setTime(Math.floor((Date.now() -  
+            startTimeRef.current) / 1000)); 
+        }, 1000); 
+        setRunning(true);
+    }
+    else if(progress==1)
+    {
+      setProgress(2)
+    }
+    else if(progress==2)
+    {
+      setProgress(3)
+    }
+    else if(progress==3)
+    {
+      setProgress(4)
+    }
+    else if(progress==4)
     {
       setProgress(5)
+    }
+    else if(progress==5)
+    {
+      setProgress(6)
+    }
+    else if(progress==6)
+    {
+      setProgress(7)
+    }
+    else if(progress==7)
+    {
+      setProgress(8)
+    }
+    else if(progress==8)
+    {
+      setProgress(9)
+      setResult("Complete!")
+
+        clearInterval(intervalRef.current); 
+        setRunning(false); 
     }
  
   }
   const sixPress = () => 
   {
-    if(progress==5)
+    if(randlist[5]==1)
+    {
+    setProgress(1)
+    
+    startTimeRef.current = Date.now() - time * 1000; 
+        intervalRef.current = setInterval(() => { 
+            setTime(Math.floor((Date.now() -  
+            startTimeRef.current) / 1000)); 
+        }, 1000); 
+        setRunning(true);
+    }
+    else if(progress==1)
+    {
+      setProgress(2)
+    }
+    else if(progress==2)
+    {
+      setProgress(3)
+    }
+    else if(progress==3)
+    {
+      setProgress(4)
+    }
+    else if(progress==4)
+    {
+      setProgress(5)
+    }
+    else if(progress==5)
     {
       setProgress(6)
+    }
+    else if(progress==6)
+    {
+      setProgress(7)
+    }
+    else if(progress==7)
+    {
+      setProgress(8)
+    }
+    else if(progress==8)
+    {
+      setProgress(9)
+      setResult("Complete!")
+
+        clearInterval(intervalRef.current); 
+        setRunning(false); 
     }
  
   }
   const sevenPress = () => 
   {
-    if(progress==6)
+    if(randlist[6]==1)
+    {
+    setProgress(1)
+    
+    startTimeRef.current = Date.now() - time * 1000; 
+        intervalRef.current = setInterval(() => { 
+            setTime(Math.floor((Date.now() -  
+            startTimeRef.current) / 1000)); 
+        }, 1000); 
+        setRunning(true);
+    }
+    else if(progress==1)
+    {
+      setProgress(2)
+    }
+    else if(progress==2)
+    {
+      setProgress(3)
+    }
+    else if(progress==3)
+    {
+      setProgress(4)
+    }
+    else if(progress==4)
+    {
+      setProgress(5)
+    }
+    else if(progress==5)
+    {
+      setProgress(6)
+    }
+    else if(progress==6)
     {
       setProgress(7)
+    }
+    else if(progress==7)
+    {
+      setProgress(8)
+    }
+    else if(progress==8)
+    {
+      setProgress(9)
+      setResult("Complete!")
+
+        clearInterval(intervalRef.current); 
+        setRunning(false); 
     }
  
   }
   const eightPress = () => 
   {
-    if(progress==7)
+    if(randlist[7]==1)
+    {
+    setProgress(1)
+    
+    startTimeRef.current = Date.now() - time * 1000; 
+        intervalRef.current = setInterval(() => { 
+            setTime(Math.floor((Date.now() -  
+            startTimeRef.current) / 1000)); 
+        }, 1000); 
+        setRunning(true);
+    }
+    else if(progress==1)
+    {
+      setProgress(2)
+    }
+    else if(progress==2)
+    {
+      setProgress(3)
+    }
+    else if(progress==3)
+    {
+      setProgress(4)
+    }
+    else if(progress==4)
+    {
+      setProgress(5)
+    }
+    else if(progress==5)
+    {
+      setProgress(6)
+    }
+    else if(progress==6)
+    {
+      setProgress(7)
+    }
+    else if(progress==7)
     {
       setProgress(8)
+    }
+    else if(progress==8)
+    {
+      setProgress(9)
+      setResult("Complete!")
+
+        clearInterval(intervalRef.current); 
+        setRunning(false); 
     }
  
   }
 
   const ninePress = () => 
   {
-    if(progress==8)
+    if(randlist[8]==1)
+    {
+    setProgress(1)
+    
+    startTimeRef.current = Date.now() - time * 1000; 
+        intervalRef.current = setInterval(() => { 
+            setTime(Math.floor((Date.now() -  
+            startTimeRef.current) / 1000)); 
+        }, 1000); 
+        setRunning(true);
+    }
+    else if(progress==1)
+    {
+      setProgress(2)
+    }
+    else if(progress==2)
+    {
+      setProgress(3)
+    }
+    else if(progress==3)
+    {
+      setProgress(4)
+    }
+    else if(progress==4)
+    {
+      setProgress(5)
+    }
+    else if(progress==5)
+    {
+      setProgress(6)
+    }
+    else if(progress==6)
+    {
+      setProgress(7)
+    }
+    else if(progress==7)
+    {
+      setProgress(8)
+    }
+    else if(progress==8)
     {
       setProgress(9)
       setResult("Complete!")
@@ -116,19 +500,19 @@ export default function HomeScreen({ navigation }) {
 
 
               <View style={{ alignItems: "flex-start", justifyContent: "center", flexDirection:"row", gap:16, margin:8 }}>
-                <Button mode="contained" onPress={onePress}>1</Button>  
-                <Button mode="contained" onPress={twoPress}>2</Button>  
-                <Button mode="contained" onPress={threePress}>3</Button>  
+                <Button mode="contained" onPress={onePress}>{randlist[0]}</Button>  
+                <Button mode="contained" onPress={twoPress}>{randlist[1]}</Button>  
+                <Button mode="contained" onPress={threePress}>{randlist[2]}</Button>  
             </View>
             <View style={{ alignItems: "flex-start", justifyContent: "center", flexDirection:"row", gap:16, margin:8 }}>
-                <Button mode="contained" onPress={fourPress}>4</Button>  
-                <Button mode="contained" onPress={fivePress}>5</Button>  
-                <Button mode="contained" onPress={sixPress}>6</Button>  
+                <Button mode="contained" onPress={fourPress}>{randlist[3]}</Button>  
+                <Button mode="contained" onPress={fivePress}>{randlist[4]}</Button>  
+                <Button mode="contained" onPress={sixPress}>{randlist[5]}</Button>  
             </View>
             <View style={{ alignItems: "flex-start", justifyContent: "center", flexDirection:"row", gap:16, margin:8 }}>
-                <Button mode="contained" onPress={sevenPress}>7</Button>  
-                <Button mode="contained" onPress={eightPress}>8</Button>  
-                <Button mode="contained" onPress={ninePress}>9</Button>  
+                <Button mode="contained" onPress={sevenPress}>{randlist[6]}</Button>  
+                <Button mode="contained" onPress={eightPress}>{randlist[7]}</Button>  
+                <Button mode="contained" onPress={ninePress}>{randlist[8]}</Button>  
             </View>
   
 
