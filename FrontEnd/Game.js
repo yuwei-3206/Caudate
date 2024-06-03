@@ -34,35 +34,35 @@ export default function HomeScreen({ navigation }) {
         }, 1000); 
         setRunning(true);
     }
-    else if(progress==1)
+    else if(progress==1&&randlist[0]==2)
     {
       setProgress(2)
     }
-    else if(progress==2)
+    else if(progress==2&&randlist[0]==3)
     {
       setProgress(3)
     }
-    else if(progress==3)
+    else if(progress==3&&randlist[0]==4)
     {
       setProgress(4)
     }
-    else if(progress==4)
+    else if(progress==4&&randlist[0]==5)
     {
       setProgress(5)
     }
-    else if(progress==5)
+    else if(progress==5&&randlist[0]==6)
     {
       setProgress(6)
     }
-    else if(progress==6)
+    else if(progress==6&&randlist[0]==7)
     {
       setProgress(7)
     }
-    else if(progress==7)
+    else if(progress==7&&randlist[0]==8)
     {
       setProgress(8)
     }
-    else if(progress==8)
+    else if(progress==8&&randlist[0]==9)
     {
       setProgress(9)
       setResult("Complete!")
@@ -92,35 +92,35 @@ export default function HomeScreen({ navigation }) {
         }, 1000); 
         setRunning(true);
     }
-    else if(progress==1)
+    else if(progress==1&&randlist[1]==2)
     {
       setProgress(2)
     }
-    else if(progress==2)
+    else if(progress==2&&randlist[1]==3)
     {
       setProgress(3)
     }
-    else if(progress==3)
+    else if(progress==3&&randlist[1]==4)
     {
       setProgress(4)
     }
-    else if(progress==4)
+    else if(progress==4&&randlist[1]==5)
     {
       setProgress(5)
     }
-    else if(progress==5)
+    else if(progress==5&&randlist[1]==6)
     {
       setProgress(6)
     }
-    else if(progress==6)
+    else if(progress==6&&randlist[1]==7)
     {
       setProgress(7)
     }
-    else if(progress==7)
+    else if(progress==7&&randlist[1]==8)
     {
       setProgress(8)
     }
-    else if(progress==8)
+    else if(progress==8&&randlist[1]==9)
     {
       setProgress(9)
       setResult("Complete!")
@@ -143,35 +143,35 @@ export default function HomeScreen({ navigation }) {
         }, 1000); 
         setRunning(true);
     }
-    else if(progress==1)
+    else if(progress==1&&randlist[2]==2)
     {
       setProgress(2)
     }
-    else if(progress==2)
+    else if(progress==2&&randlist[2]==3)
     {
       setProgress(3)
     }
-    else if(progress==3)
+    else if(progress==3&&randlist[2]==4)
     {
       setProgress(4)
     }
-    else if(progress==4)
+    else if(progress==4&&randlist[2]==5)
     {
       setProgress(5)
     }
-    else if(progress==5)
+    else if(progress==5&&randlist[2]==6)
     {
       setProgress(6)
     }
-    else if(progress==6)
+    else if(progress==6&&randlist[2]==7)
     {
       setProgress(7)
     }
-    else if(progress==7)
+    else if(progress==7&&randlist[2]==8)
     {
       setProgress(8)
     }
-    else if(progress==8)
+    else if(progress==8&&randlist[2]==9)
     {
       setProgress(9)
       setResult("Complete!")
@@ -194,35 +194,35 @@ export default function HomeScreen({ navigation }) {
         }, 1000); 
         setRunning(true);
     }
-    else if(progress==1)
+    else if(progress==1&&randlist[3]==2)
     {
       setProgress(2)
     }
-    else if(progress==2)
+    else if(progress==2&&randlist[3]==3)
     {
       setProgress(3)
     }
-    else if(progress==3)
+    else if(progress==3&&randlist[3]==4)
     {
       setProgress(4)
     }
-    else if(progress==4)
+    else if(progress==4&&randlist[3]==5)
     {
       setProgress(5)
     }
-    else if(progress==5)
+    else if(progress==5&&randlist[3]==6)
     {
       setProgress(6)
     }
-    else if(progress==6)
+    else if(progress==6&&randlist[3]==7)
     {
       setProgress(7)
     }
-    else if(progress==7)
+    else if(progress==7&&randlist[3]==8)
     {
       setProgress(8)
     }
-    else if(progress==8)
+    else if(progress==8&&randlist[3]==9)
     {
       setProgress(9)
       setResult("Complete!")
@@ -245,35 +245,35 @@ export default function HomeScreen({ navigation }) {
         }, 1000); 
         setRunning(true);
     }
-    else if(progress==1)
+    else if(progress==1&&randlist[4]==2)
     {
       setProgress(2)
     }
-    else if(progress==2)
+    else if(progress==2&&randlist[4]==3)
     {
       setProgress(3)
     }
-    else if(progress==3)
+    else if(progress==3&&randlist[4]==4)
     {
       setProgress(4)
     }
-    else if(progress==4)
+    else if(progress==4&&randlist[4]==5)
     {
       setProgress(5)
     }
-    else if(progress==5)
+    else if(progress==5&&randlist[4]==6)
     {
       setProgress(6)
     }
-    else if(progress==6)
+    else if(progress==6&&randlist[4]==7)
     {
       setProgress(7)
     }
-    else if(progress==7)
+    else if(progress==7&&randlist[4]==8)
     {
       setProgress(8)
     }
-    else if(progress==8)
+    else if(progress==8&&randlist[4]==9)
     {
       setProgress(9)
       setResult("Complete!")
@@ -281,7 +281,6 @@ export default function HomeScreen({ navigation }) {
         clearInterval(intervalRef.current); 
         setRunning(false); 
     }
- 
   }
   const sixPress = () => 
   {
@@ -296,35 +295,35 @@ export default function HomeScreen({ navigation }) {
         }, 1000); 
         setRunning(true);
     }
-    else if(progress==1)
+    else if(progress==1&&randlist[5]==2)
     {
       setProgress(2)
     }
-    else if(progress==2)
+    else if(progress==2&&randlist[5]==3)
     {
       setProgress(3)
     }
-    else if(progress==3)
+    else if(progress==3&&randlist[5]==4)
     {
       setProgress(4)
     }
-    else if(progress==4)
+    else if(progress==4&&randlist[5]==5)
     {
       setProgress(5)
     }
-    else if(progress==5)
+    else if(progress==5&&randlist[5]==6)
     {
       setProgress(6)
     }
-    else if(progress==6)
+    else if(progress==6&&randlist[5]==7)
     {
       setProgress(7)
     }
-    else if(progress==7)
+    else if(progress==7&&randlist[5]==8)
     {
       setProgress(8)
     }
-    else if(progress==8)
+    else if(progress==8&&randlist[5]==9)
     {
       setProgress(9)
       setResult("Complete!")
@@ -347,35 +346,35 @@ export default function HomeScreen({ navigation }) {
         }, 1000); 
         setRunning(true);
     }
-    else if(progress==1)
+    else if(progress==1&&randlist[6]==2)
     {
       setProgress(2)
     }
-    else if(progress==2)
+    else if(progress==2&&randlist[6]==3)
     {
       setProgress(3)
     }
-    else if(progress==3)
+    else if(progress==3&&randlist[6]==4)
     {
       setProgress(4)
     }
-    else if(progress==4)
+    else if(progress==4&&randlist[6]==5)
     {
       setProgress(5)
     }
-    else if(progress==5)
+    else if(progress==5&&randlist[6]==6)
     {
       setProgress(6)
     }
-    else if(progress==6)
+    else if(progress==6&&randlist[6]==7)
     {
       setProgress(7)
     }
-    else if(progress==7)
+    else if(progress==7&&randlist[6]==8)
     {
       setProgress(8)
     }
-    else if(progress==8)
+    else if(progress==8&&randlist[6]==9)
     {
       setProgress(9)
       setResult("Complete!")
@@ -398,35 +397,35 @@ export default function HomeScreen({ navigation }) {
         }, 1000); 
         setRunning(true);
     }
-    else if(progress==1)
+    else if(progress==1&&randlist[7]==2)
     {
       setProgress(2)
     }
-    else if(progress==2)
+    else if(progress==2&&randlist[7]==3)
     {
       setProgress(3)
     }
-    else if(progress==3)
+    else if(progress==3&&randlist[7]==4)
     {
       setProgress(4)
     }
-    else if(progress==4)
+    else if(progress==4&&randlist[7]==5)
     {
       setProgress(5)
     }
-    else if(progress==5)
+    else if(progress==5&&randlist[7]==6)
     {
       setProgress(6)
     }
-    else if(progress==6)
+    else if(progress==6&&randlist[7]==7)
     {
       setProgress(7)
     }
-    else if(progress==7)
+    else if(progress==7&&randlist[7]==8)
     {
       setProgress(8)
     }
-    else if(progress==8)
+    else if(progress==8&&randlist[7]==9)
     {
       setProgress(9)
       setResult("Complete!")
@@ -450,35 +449,35 @@ export default function HomeScreen({ navigation }) {
         }, 1000); 
         setRunning(true);
     }
-    else if(progress==1)
+    else if(progress==1&&randlist[8]==2)
     {
       setProgress(2)
     }
-    else if(progress==2)
+    else if(progress==2&&randlist[8]==3)
     {
       setProgress(3)
     }
-    else if(progress==3)
+    else if(progress==3&&randlist[8]==4)
     {
       setProgress(4)
     }
-    else if(progress==4)
+    else if(progress==4&&randlist[8]==5)
     {
       setProgress(5)
     }
-    else if(progress==5)
+    else if(progress==5&&randlist[8]==6)
     {
       setProgress(6)
     }
-    else if(progress==6)
+    else if(progress==6&&randlist[8]==7)
     {
       setProgress(7)
     }
-    else if(progress==7)
+    else if(progress==7&&randlist[8]==8)
     {
       setProgress(8)
     }
-    else if(progress==8)
+    else if(progress==8&&randlist[8]==9)
     {
       setProgress(9)
       setResult("Complete!")
