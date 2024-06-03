@@ -95,7 +95,7 @@ package-lock.json
 
 # Root dir shouldn't have Xcode project
 /*.xcodeproj
-
+.expo
 # ReactCommon subdir shouldn't have Xcode project
 /packages/react-native/ReactCommon/**/*.xcodeproj
 

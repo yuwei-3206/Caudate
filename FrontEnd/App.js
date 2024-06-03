@@ -1,7 +1,11 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
 //tell React that we will implement a navigator
 import { NavigationContainer } from "@react-navigation/native";
+import * as SplashScreen from 'expo-splash-screen';
+import { useFonts } from 'expo-font';
+import AppLoading from 'expo-app-loading';
+import { useCallback, useState } from 'react';
+import * as Font from 'expo-font';
+
 
 
 //create a stack navigator
@@ -12,13 +16,36 @@ import Game from './components/Game';
 import Score from './components/Score';
 
 
+SplashScreen.preventAutoHideAsync();
+
 const Stack = createNativeStackNavigator();
 
 
 export default function App() {
+  const [IsReady, SetIsReady] = useState(false);
+
+  const useFonts = async () =>
+    await Font.loadAsync({
+      'Nunito-Black': require('./assets/fonts/Nunito-Black.ttf'),
+    });
+
+  const LoadFonts = async () => {
+    await useFonts();
+  };
+
+  if (!IsReady) {
+    return (
+      <AppLoading
+        startAsync={LoadFonts}
+        onFinish={() => SetIsReady(true)}
+        onError={() => { }}
+      />
+    );
+  }
+
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen
           name="Home Screen"
           component={HomeScreen}
@@ -27,6 +54,6 @@ export default function App() {
         <Stack.Screen name="Game" component={Game} options={{ title: 'Game' }} />
         <Stack.Screen name="Score" component={Score} options={{ title: 'Score' }} />
       </Stack.Navigator>
-    </NavigationContainer>
+    </NavigationContainer >
   );
 }
