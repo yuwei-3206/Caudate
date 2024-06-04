@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, TouchableOpacity, SafeAreaView } from "react-native";
-import constants from "./constants";
+import constants from "../constants";
 
 
 export default function HomeScreen({ navigation }) {
