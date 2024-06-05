@@ -1,32 +1,43 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-//tell React that we will implement a navigator
-import { NavigationContainer } from "@react-navigation/native";
+import { Provider as PaperProvider } from 'react-native-paper';
+import { lightTheme, darkTheme } from './Theme';
 
-
-//create a stack navigator
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import Levels from './components/Levels';
+import { createStackNavigator } from '@react-navigation/stack';
+import { NavigationContainer } from '@react-navigation/native';
+import React, { useState } from 'react';
+import IntroScreen from './components/IntroScreen';
 import HomeScreen from './components/HomeScreen';
+import Dashboard from './components/Dashboard';
 import Game from './components/Game';
-import Score from './components/Score';
+// import GlobalLeaderboard from './components/GlobalLeaderboard';
+// import UserHistory from './components/UserHistory';
 
+const Stack = createStackNavigator();
 
-const Stack = createNativeStackNavigator();
+const AppNavigator = () => {
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
+  const toggleTheme = () => {
+    setIsDarkMode(!isDarkMode);
+  };
 
-export default function App() {
+  const selectedTheme = isDarkMode ? darkTheme : lightTheme;
+
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen
-          name="Home Screen"
-          component={HomeScreen}
-        />
-        <Stack.Screen name="Levels" component={Levels} options={{ title: 'Levels' }} />
-        <Stack.Screen name="Game" component={Game} options={{ title: 'Game' }} />
-        <Stack.Screen name="Score" component={Score} options={{ title: 'Score' }} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <PaperProvider theme={selectedTheme}>
+      <NavigationContainer theme={selectedTheme}>
+        <Stack.Navigator initialRouteName="IntroScreen" screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="IntroScreen" component={IntroScreen} />
+          <Stack.Screen name="HomeScreen">
+            {props => <HomeScreen {...props} toggleTheme={toggleTheme} isDarkMode={isDarkMode} />}
+          </Stack.Screen>
+          <Stack.Screen name="Dashboard" component={Dashboard} />
+          <Stack.Screen name="Game" component={Game} />
+          {/* <Stack.Screen name="GlobalLeaderboard" component={GlobalLeaderboard} />
+          <Stack.Screen name="UserHistory" component={UserHistory} /> */}
+        </Stack.Navigator>
+      </NavigationContainer>
+    </PaperProvider>
   );
-}
+};
+
+export default AppNavigator;
