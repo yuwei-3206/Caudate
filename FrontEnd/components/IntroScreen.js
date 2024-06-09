@@ -22,7 +22,7 @@ export default function IntroScreen({ navigation }) {
                     navigation.navigate('HomeScreen');
                 });
             });
-        }, 3000);
+        }, 8000);
 
         return () => clearTimeout(timer);
     }, []);
