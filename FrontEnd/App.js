@@ -10,7 +10,6 @@ import Dashboard from './components/Dashboard';
 import Game from './components/Game';
 // import GlobalLeaderboard from './components/GlobalLeaderboard';
 // import UserHistory from './components/UserHistory';
-// import UserHistory from './components/UserHistory';
 
 const Stack = createStackNavigator();
 
