@@ -1,51 +1,31 @@
+import { StatusBar } from 'expo-status-bar';
+import { StyleSheet, Text, View } from 'react-native';
 //tell React that we will implement a navigator
 import { NavigationContainer } from "@react-navigation/native";
-import * as SplashScreen from 'expo-splash-screen';
-import { useFonts } from 'expo-font';
-import AppLoading from 'expo-app-loading';
-import { useCallback, useState } from 'react';
-import * as Font from 'expo-font';
-
 
 
 //create a stack navigator
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Levels from './components/Levels';
 import HomeScreen from './components/HomeScreen';
+import Dashboard from './components/Dashboard';
 import Game from './components/Game';
-import Score from './components/Score';
+// import GlobalLeaderboard from './components/GlobalLeaderboard';
+// import UserHistory from './components/UserHistory';
+
+const Stack = createStackNavigator();
 
 
-SplashScreen.preventAutoHideAsync();
-
-const Stack = createNativeStackNavigator();
-
-
-export default function App() {
-  const [IsReady, SetIsReady] = useState(false);
-
-  const useFonts = async () =>
-    await Font.loadAsync({
-      'Nunito-Black': require('./assets/fonts/Nunito-Black.ttf'),
-    });
-
-  const LoadFonts = async () => {
-    await useFonts();
+  const toggleTheme = () => {
+    setIsDarkMode(!isDarkMode);
   };
 
-  if (!IsReady) {
-    return (
-      <AppLoading
-        startAsync={LoadFonts}
-        onFinish={() => SetIsReady(true)}
-        onError={() => { }}
-      />
-    );
-  }
+  const selectedTheme = isDarkMode ? darkTheme : lightTheme;
 
+export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Navigator>
         <Stack.Screen
           name="Home Screen"
           component={HomeScreen}
@@ -54,6 +34,8 @@ export default function App() {
         <Stack.Screen name="Game" component={Game} options={{ title: 'Game' }} />
         <Stack.Screen name="Score" component={Score} options={{ title: 'Score' }} />
       </Stack.Navigator>
-    </NavigationContainer >
+    </NavigationContainer>
   );
-}
+};
+
+export default AppNavigator;

@@ -1,8 +1,10 @@
 import React, { useState, useRef, useEffect } from "react";
-import { View, Text } from "react-native";
+import { View, StyleSheet, Dimensions } from "react-native";
 import { Button } from 'react-native-paper';
+import CustomButton from './CustomButton';
+import CustomText from './CustomText';
 
-const Game = ({ navigation, route }) => {
+export default function Game({ navigation, route }) {
   const [time, setTime] = useState(0);
   const [running, setRunning] = useState(false);
   const intervalRef = useRef(null);
@@ -48,23 +50,26 @@ const Game = ({ navigation, route }) => {
     setNumbers(shuffledNumbers);
   };
 
-  return (
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "flex-start", gap: 8, margin: 8 }}>
-      <Text style={{ margin: 30, fontSize: 20 }}>Press 1-{numbers.length} in order</Text>
+  const numColumns = Math.sqrt(numbers.length);
 
-      <View>
-        {[...Array(Math.sqrt(numbers.length))].map((_, row) => (
+  return (
+    <View style={styles.container}>
+      <CustomText style={styles.title}>Press 1-{numbers.length} in order</CustomText>
+      <View style={styles.gridcontainer}>
+        {[...Array(numColumns)].map((_, row) => (
           <View key={row} style={{ flexDirection: "row" }}>
-            {[...Array(Math.sqrt(numbers.length))].map((_, col) => {
-              const index = row * Math.sqrt(numbers.length) + col;
+            {[...Array(numColumns)].map((_, col) => {
+              const index = row * numColumns + col;
               const num = numbers[index];
+              const isClickable = running && progress === num;
               return (
                 <Button
                   key={index}
                   mode="contained"
                   onPress={() => handlePress(num)}
-                  disabled={!running || progress !== num}
-                  style={{ margin: 4 }}
+                  disabled={!isClickable}
+                  style={[styles.button, { backgroundColor: isClickable ? "white" : "white", borderColor: isClickable ? "darkgrey" : "darkgrey" }]}
+                  labelStyle={{ color: isClickable ? "red" : "darkgrey" }}
                 >
                   {num}
                 </Button>
@@ -73,17 +78,42 @@ const Game = ({ navigation, route }) => {
           </View>
         ))}
       </View>
-
-      <Button mode="contained" onPress={startGame} disabled={running}>
+      <CustomButton onPress={startGame} disabled={running} style={styles.customButton}>
         Start Game
-      </Button>
-      <Button mode="contained" onPress={() => navigation.navigate('Score')} disabled={running}>
+      </CustomButton>
+      <CustomButton onPress={() => navigation.navigate('Score')} disabled={running} style={styles.customButton}>
         Get Score
-      </Button>
-      <Text>{time}s</Text>
-      <Text>{result}</Text>
+      </CustomButton>
+      <CustomText>{time}s</CustomText>
+      <CustomText>{result}</CustomText>
     </View>
   );
 };
 
-export default Game;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "flex-start",
+    padding: 20
+  },
+  title: {
+    margin: 30,
+    fontSize: 20,
+  },
+  gridcontainer: {
+    marginBottom: 30
+  },
+  button: {
+    width: 75,
+    height: 75,
+    margin: 0,
+    borderRadius: 0,
+    justifyContent: "center",
+    alignItems: "center",
+    borderWidth: 1,
+  },
+  customButton: {
+    marginBottom: 20,
+  },
+});
