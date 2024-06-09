@@ -1,59 +1,43 @@
-//tell React that we will implement a navigator
-import { NavigationContainer } from "@react-navigation/native";
-import * as SplashScreen from 'expo-splash-screen';
-import { useFonts } from 'expo-font';
-import AppLoading from 'expo-app-loading';
-import { useCallback, useState } from 'react';
-import * as Font from 'expo-font';
+import { Provider as PaperProvider } from 'react-native-paper';
+import { lightTheme, darkTheme } from './Theme';
 
-
-
-//create a stack navigator
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import Levels from './components/Levels';
+import { createStackNavigator } from '@react-navigation/stack';
+import { NavigationContainer } from '@react-navigation/native';
+import React, { useState } from 'react';
+import IntroScreen from './components/IntroScreen';
 import HomeScreen from './components/HomeScreen';
+import Dashboard from './components/Dashboard';
 import Game from './components/Game';
-import Score from './components/Score';
+// import GlobalLeaderboard from './components/GlobalLeaderboard';
+// import UserHistory from './components/UserHistory';
 
+const Stack = createStackNavigator();
 
-SplashScreen.preventAutoHideAsync();
+const AppNavigator = () => {
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
-const Stack = createNativeStackNavigator();
-
-
-export default function App() {
-  const [IsReady, SetIsReady] = useState(false);
-
-  const useFonts = async () =>
-    await Font.loadAsync({
-      'Nunito-Black': require('./assets/fonts/Nunito-Black.ttf'),
-    });
-
-  const LoadFonts = async () => {
-    await useFonts();
+  const toggleTheme = () => {
+    setIsDarkMode(!isDarkMode);
   };
 
-  if (!IsReady) {
-    return (
-      <AppLoading
-        startAsync={LoadFonts}
-        onFinish={() => SetIsReady(true)}
-        onError={() => { }}
-      />
-    );
-  }
+  const selectedTheme = isDarkMode ? darkTheme : lightTheme;
 
   return (
-    <NavigationContainer>
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
-        <Stack.Screen
-          name="Home Screen"
-          component={HomeScreen}
-        />
-        <Stack.Screen name="Levels" component={Levels} options={{ title: 'Levels' }} />
-        <Stack.Screen name="Game" component={Game} options={{ title: 'Game' }} />
-        <Stack.Screen name="Score" component={Score} options={{ title: 'Score' }} />
-      </Stack.Navigator>
-    </NavigationContainer >
+    <PaperProvider theme={selectedTheme}>
+      <NavigationContainer theme={selectedTheme}>
+        <Stack.Navigator initialRouteName="IntroScreen" screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="IntroScreen" component={IntroScreen} />
+          <Stack.Screen name="HomeScreen">
+            {props => <HomeScreen {...props} toggleTheme={toggleTheme} isDarkMode={isDarkMode} />}
+          </Stack.Screen>
+          <Stack.Screen name="Dashboard" component={Dashboard} />
+          <Stack.Screen name="Game" component={Game} />
+          {/* <Stack.Screen name="GlobalLeaderboard" component={GlobalLeaderboard} />
+          <Stack.Screen name="UserHistory" component={UserHistory} /> */}
+        </Stack.Navigator>
+      </NavigationContainer>
+    </PaperProvider>
   );
-}
+};
+
+export default AppNavigator;
