@@ -10,6 +10,7 @@ const CustomButton = ({ children, onPress }) => {
       onPress={onPress}
       color={theme.colors.button.text}
       style={{ backgroundColor: theme.colors.button.background }}
+      labelStyle={{ fontFamily: 'Nunito_900Black' }}
     >
       {children}
     </Button>

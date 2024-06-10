@@ -6,7 +6,7 @@ const CustomText = ({ children, style, ...props }) => {
   const theme = useTheme();
 
   return (
-    <Text style={[{ color: theme.colors.text }, style]} {...props}>
+    <Text style={[{ color: theme.colors.text }, style, {fontFamily: 'Nunito_900Black'}]} {...props}>
       {children}
     </Text>
   );

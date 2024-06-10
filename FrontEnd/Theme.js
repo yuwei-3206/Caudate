@@ -1,28 +1,32 @@
-import { DefaultTheme } from 'react-native-paper';
-import { useFonts } from 'expo-font';
-import { Nunito_400Regular, Nunito_700Bold, Nunito_900Black } from '@expo-google-fonts/nunito';
+import { DefaultTheme, configureFonts } from 'react-native-paper';
 
-// Load the fonts
-/*useFonts({
-  Nunito_400Regular,
-  Nunito_700Bold,
-  Nunito_900Black
-});*/
-
-// Define the theme with the loaded fonts
-const theme = {
-  ...DefaultTheme,
-  /*fonts: {
+/*
+const fontConfig = {
+  default: {
     regular: {
       fontFamily: 'Nunito_400Regular',
+      fontWeight: 'normal',
     },
-    bold: {
+    medium: {
       fontFamily: 'Nunito_700Bold',
+      fontWeight: 'normal',
     },
     black: {
       fontFamily: 'Nunito_900Black',
+      fontWeight: 'normal',
     },
-  },*/
+  },
+};
+
+fontConfig.ios = fontConfig.default;
+fontConfig.android = fontConfig.default;
+fontConfig.web = fontConfig.default;
+
+const fonts = configureFonts({ config: fontConfig });
+*/
+
+const theme = {
+  ...DefaultTheme,
 };
 
 const lightTheme = {
@@ -31,7 +35,7 @@ const lightTheme = {
     ...theme.colors,
     primary: '#ffffff',
     accent: '#00B386',
-    background: '#6bdfff',
+    background: '#1cb0f6',
     text: '#000000',
     button: {
       text: '#FFFFFF',
