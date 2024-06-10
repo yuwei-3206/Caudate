@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, SafeAreaView } from "react-native";
 import constants from "../constants";
 
 
-export default function HomeScreen({ navigation }) {
+export default function Levels({ navigation }) {
 
   return (
     <SafeAreaView style={[constants.safeArea, { justifyContent: "space-between" }]}>
