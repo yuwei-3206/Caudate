@@ -1,10 +1,9 @@
-const { default: mongoose } = require("mongoose");
+const mongoose = require("mongoose");
 
+const scoreSchema = new mongoose.Schema({
+    user_id: { type: String, required: true },
+    level: { type: Number, required: true },
+    score: { type: String, required: true }
+});
 
-const scoreModel = mongoose.Schema({
-    score: { type: Number, require: true },
-    userId: { type: String, require: true },
-    level: { type: Number, require: true }
-})
-
-module.exports = mongoose.model('Score', scoreModel);
+module.exports = mongoose.model('Score', scoreSchema);

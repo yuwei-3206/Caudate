@@ -1,10 +1,11 @@
 const express = require('express');
-const { default: mongoose, connect } = require('mongoose');
-const User = require('./model/User');
+const { default: mongoose } = require('mongoose');
+const userRoutes = require('./routes/userRoutes');
+const gameRoutes = require('./routes/gameRoutes');
 const app = express();
 const port = 3000;
 
-//Access user data.
+// Access user data
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
@@ -16,51 +17,24 @@ app.use((req, res, next) => {
     next();
 });
 
-
-// connect to database
-const uri = "this is blank and need to be processed from an env file.";
+// Connect to database
+const uri = "this is blank and needs to be processed from an env file.";
 mongoose.connect(uri)
-    .then(console.log("✅ Connected to database."))
+    .then(() => console.log("✅ Connected to database."))
     .catch((error) => {
         console.log('Unable to connect to MongoDB Atlas!');
         console.error(error);
     });
 
+// Use routes
+app.use('/api/users', userRoutes);
+app.use('/api/games', gameRoutes);
 
-
-
-app.post('/api/users', (req, res) => {
-    // Create a user
-    const password = req.body.password;
-    const fullName = req.body.fullName;
-    const email = req.body.email;
-
-    let user = User.findOne({ email: email });
-    if (user) return res.status(400).send("User already register.");
-
-    if (email && password && fullName) {
-        user = new User({
-            email: email,
-            password: password,
-            fullName: fullName,
-        });
-
-        user.save()
-            .then(() => res.status(201).json({ message: 'User created.', user }))
-            .catch((error) => res.status(500).send({ error: error }));
-    }
-})
-
-
-// Get the current
-app.get('/api/users/', (req, res) => {
-    User.find()
-        .then((users) => res.status(200).json(users))
-        .catch((error) => res.send(500).json({ error: error }))
-})
-
-
-app.listen(port, () => {
-    console.info(`⚙️ Server running on port localhost:${port}`)
+// Route handler for root URL
+app.get('/', (req, res) => {
+    res.send('Server is running successfully!');
 });
 
+app.listen(port, () => {
+    console.info(`⚙️ Server running on port localhost:${port}`);
+});
