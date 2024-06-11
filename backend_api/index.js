@@ -5,6 +5,9 @@ const gameRoutes = require('./routes/gameRoutes');
 const app = express();
 const port = 3000;
 
+const User = require("./model/User");
+const Score = require("./model/Score");
+
 // Access user data
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -27,8 +30,63 @@ mongoose.connect(uri)
     });
 
 // Use routes
-app.use('/api/users', userRoutes);
-app.use('/api/games', gameRoutes);
+
+function generateUniqueUserId() {
+    return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+}
+
+// Create a new user
+app.post('/api/users/', async (req, res) => {
+    const { username } = req.body
+    try {
+        // Check if username already exists
+        const existingUser = await User.findOne({ username });
+        if (existingUser) {
+            return res.status(400).json({ message: 'Username already exists.' });
+        }
+        // Create new user
+        const newUser = new User({
+            username,
+        });
+        const savedUser = await newUser.save();
+        res.status(201).json({ message: 'User created successfully.', savedUser });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Server error.' });
+    }
+});
+
+
+// Create a score with user
+app.post('/api/scores/', async (req, res) => {
+    const { username, score, level } = req.body
+    console.log(req.body)
+    try {
+        // Check if username already exists
+        const existingUser = await User.findOne({ username });
+        if (existingUser) {
+            const newScore = new Score({
+                username: username,
+                score: score,
+                level: level
+            })
+
+            const savedScore = await newScore.save();
+            res.status(201).json({ message: 'User score saved.', savedScore });
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Server error.' });
+    }
+})
+
+
+
+app.get("/check-status", (req, res) => {
+    res.send("testing");
+})
+
+
 
 // Route handler for root URL
 app.get('/', (req, res) => {

@@ -11,6 +11,8 @@ function generateUniqueUserId() {
 // Create a new user
 router.post('/create', async (req, res) => {
     const { username, password } = req.body;
+    console.log(username)
+    console.log(password)
 
     try {
         // Check if username already exists

@@ -11,6 +11,7 @@ import IntroScreen from './components/IntroScreen';
 import HomeScreen from './components/HomeScreen';
 import Dashboard from './components/Dashboard';
 import Game from './components/Game';
+import Score from './components/Score';
 
 const Stack = createNativeStackNavigator();
 
@@ -48,14 +49,15 @@ const AppNavigator = () => {
   return (
     <PaperProvider theme={selectedTheme}>
       <NavigationContainer theme={selectedTheme}>
-          <Stack.Navigator initialRouteName="IntroScreen" screenOptions={{ headerShown: false }}>
-            <Stack.Screen name="IntroScreen" component={IntroScreen} />
-            <Stack.Screen name="HomeScreen">
-              {props => <HomeScreen {...props} toggleTheme={toggleTheme} isDarkMode={isDarkMode} />}
-            </Stack.Screen>
-            <Stack.Screen name="Dashboard" component={Dashboard} />
-            <Stack.Screen name="Game" component={Game} />
-          </Stack.Navigator>
+        <Stack.Navigator initialRouteName="IntroScreen" screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="IntroScreen" component={IntroScreen} />
+          <Stack.Screen name="HomeScreen">
+            {props => <HomeScreen {...props} toggleTheme={toggleTheme} isDarkMode={isDarkMode} />}
+          </Stack.Screen>
+          <Stack.Screen name="Dashboard" component={Dashboard} />
+          <Stack.Screen name="Game" component={Game} />
+          <Stack.Screen name="Score" component={Score} />
+        </Stack.Navigator>
       </NavigationContainer>
     </PaperProvider>
   );

@@ -1,39 +1,84 @@
-import React from "react";
-import { View, StyleSheet } from "react-native";
-import CustomButton from './CustomButton';
-import CustomText from './CustomText';
+import React, { useEffect } from "react";
+import { View, Text, TouchableOpacity, SafeAreaView } from "react-native";
+import constants from "../constants";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export default function Dashboard({ navigation }) {
+export default function Levels({ navigation }) {
+
+  const createRandomUser = async () => {
+
+    const user = {
+      username: "msyl" + Math.random() * 199,
+    }
+
+    const jsonValue = await AsyncStorage.getItem('user');
+
+    // check local storage for user
+    if (jsonValue === null) {
+
+      try {
+        const response = await fetch('http://localhost:3000/api/users/create', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(user),
+        });
+
+        if (response.ok) {
+          const responseData = await response.json();
+          try {
+            let saveUser = await AsyncStorage.setItem(
+              'user',
+              JSON.stringify(responseData)
+            ).then(() => console.log("User ready 😊."))
+          } catch (error) {
+            console.log("user failed to save to local storage..")
+          }
+          console.log('User saved successfully:', responseData);
+        } else {
+          console.error('Failed to save User:', response.statusText);
+        }
+      } catch (error) {
+        console.error('Error saving User:', error);
+      }
+    } else {
+      console.log("Your user name is " + jsonValue)
+    }
+  }
+
+  useEffect(() => {
+    createRandomUser();
+  })
+
+
   return (
-    <View style={styles.container}>
-      <CustomText style={styles.title}>Levels 🪜</CustomText>  
-        
-      <CustomButton onPress={() => navigation.navigate('Game', { level: 'simple' })}>
-        Simple ✅
-      </CustomButton>  
-      <CustomButton onPress={() => navigation.navigate('Game', { level: 'medium' })}>
-        Medium 🔒
-      </CustomButton>  
-      <CustomButton onPress={() => navigation.navigate('Game', { level: 'difficult' })}>
-        Difficult 😓
-      </CustomButton>  
-          
-      <CustomText>Caudate 🧠</CustomText>  
-      <CustomText>Improve your life, your attention 👀 , and focus 🧘.</CustomText>
-    </View>
+    <SafeAreaView style={[constants.safeArea, { justifyContent: "space-between" }]}>
+      <Text style={constants.logoText}>Levels 🪜</Text>
+      <View style={{ alignItems: 'center', marginBottom: 10, }}>
+        <TouchableOpacity
+          style={constants.kButton}
+          onPress={() => navigation.navigate('Game')}>
+          <Text style={constants.btnText} >Simple ✅ </Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={constants.kButton}
+          onPress={() => navigation.navigate('Game')}>
+          <Text style={constants.btnText}> Medium 🔒</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={constants.kButton}
+          onPress={() => navigation.navigate('Game')}>
+          <Text style={constants.btnText}> Difficult 😓</Text>
+        </TouchableOpacity>
+
+      </View>
+      <View style={{ alignItems: 'center', padding: 16 }}>
+        <Text style={constants.whiteText} >Caudate 🧠</Text>
+        <Text style={constants.lightGrayText}>Improve your life, your attention 👀 , and focus 🧘.</Text>
+      </View>
+    </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1, 
-    alignItems: "center", 
-    justifyContent: "flex-start",
-    gap: 8, 
-    margin: 8,
-  },
-  title: {
-    margin: 30, 
-    fontSize: 20,
-  },
-});

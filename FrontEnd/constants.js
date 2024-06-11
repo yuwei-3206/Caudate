@@ -35,7 +35,7 @@ const constantStyles = StyleSheet.create({
         fontFamily: "Nunito-Black"
     },
     lightGrayText: {
-        color: "white",
+        fontSize: 24,
         textAlign: 'center',
         fontFamily: "Nunito-Black"
     }
