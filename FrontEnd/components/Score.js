@@ -46,7 +46,10 @@ export default function Score({ navigation, route }) {
 
   // create on the api
   useEffect(() => {
-    createScore();
+    if (score) {
+      createScore();
+    }
+
   }, []);
 
 
