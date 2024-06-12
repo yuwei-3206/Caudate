@@ -1,98 +1,47 @@
+require('dotenv').config();
 const express = require('express');
-const { default: mongoose } = require('mongoose');
-const userRoutes = require('./routes/userRoutes');
-const gameRoutes = require('./routes/gameRoutes');
+const mongoose = require('mongoose');
+const cors = require('cors');
+const userRoutes = require('./routes/users');
+const gameRoutes = require('./routes/scores');
+const { errorHandler } = require('./middleware/errorMiddleware');
+
 const app = express();
-const port = 3000;
+const PORT = process.env.PORT || 3000;
+const MONGO_URI = 'mongodb+srv://yw829:Srkey11233206!@travel-mng.6qtlsr7.mongodb.net/?retryWrites=true&w=majority&appName=travel-mng';
 
-const User = require("./model/User");
-const Score = require("./model/Score");
+// Connect to MongoDB
+mongoose.connect(MONGO_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+})
+.then(() => console.log('MongoDB connected'))
+.catch(err => console.error('MongoDB connection error:', err));
 
-// Access user data
-app.use(express.urlencoded({ extended: true }));
+// Configure CORS
+const corsOptions = {
+    origin: 'http://10.0.0.176:3000', // Replace with your frontend URL
+    methods: ['GET', 'POST'], // Specify the allowed HTTP methods
+    allowedHeaders: ['Content-Type', 'Authorization'], // Specify the allowed headers
+};
+
+// Use cors middleware with options
+app.use(cors(corsOptions));
 app.use(express.json());
 
-// CORS for frontend to interact from this origin
-app.use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
-    next();
-});
+// Routes
+app.use('/api/users', userRoutes);
+app.use('/api/scores', gameRoutes);
 
-// Connect to database
-const uri = "this is blank and needs to be processed from an env file.";
-mongoose.connect(uri)
-    .then(() => console.log("✅ Connected to database."))
-    .catch((error) => {
-        console.log('Unable to connect to MongoDB Atlas!');
-        console.error(error);
-    });
+// Error handling middleware
+app.use(errorHandler);
 
-// Use routes
-
-function generateUniqueUserId() {
-    return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-}
-
-// Create a new user
-app.post('/api/users/', async (req, res) => {
-    const { username } = req.body
-    try {
-        // Check if username already exists
-        const existingUser = await User.findOne({ username });
-        if (existingUser) {
-            return res.status(400).json({ message: 'Username already exists.' });
-        }
-        // Create new user
-        const newUser = new User({
-            username,
-        });
-        const savedUser = await newUser.save();
-        res.status(201).json({ message: 'User created successfully.', savedUser });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Server error.' });
-    }
-});
-
-
-// Create a score with user
-app.post('/api/scores/', async (req, res) => {
-    const { username, score, level } = req.body
-    console.log(req.body)
-    try {
-        // Check if username already exists
-        const existingUser = await User.findOne({ username });
-        if (existingUser) {
-            const newScore = new Score({
-                username: username,
-                score: score,
-                level: level
-            })
-
-            const savedScore = await newScore.save();
-            res.status(201).json({ message: 'User score saved.', savedScore });
-        }
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Server error.' });
-    }
-})
-
-
-
-app.get("/check-status", (req, res) => {
-    res.send("testing");
-})
-
-
-
-// Route handler for root URL
-app.get('/', (req, res) => {
+// Default route
+app.all('/', (req, res) => {
     res.send('Server is running successfully!');
 });
 
-app.listen(port, () => {
-    console.info(`⚙️ Server running on port localhost:${port}`);
+// Start the server
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
 });

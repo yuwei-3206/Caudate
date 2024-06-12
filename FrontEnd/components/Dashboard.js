@@ -5,8 +5,8 @@ import CustomText from './CustomText';
 import globalStyles from '../GlobalStyles';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export default function Levels({ navigation }) {
-
+export default function Levels({ navigation, route }) {
+/*
   const createRandomUser = async () => {
 
     const user = {
@@ -52,7 +52,7 @@ export default function Levels({ navigation }) {
   useEffect(() => {
     createRandomUser();
   })
-
+*/
 
   return (
     <SafeAreaView style={globalStyles.safeArea}>
@@ -60,19 +60,19 @@ export default function Levels({ navigation }) {
 
       <View style={globalStyles.wrapper}>
         <View style={globalStyles.btnContainer}>
-          <CustomButton onPress={() => navigation.navigate('Game', { level: 'simple' })} style={globalStyles.btn}>
+          <CustomButton onPress={() => navigation.navigate('Game', { level: 'simple', username: route.params.username })} style={globalStyles.btn}>
             Simple ✅
           </CustomButton>
         </View>
 
         <View style={globalStyles.btnContainer}>
-          <CustomButton onPress={() => navigation.navigate('Game', { level: 'medium' })} style={globalStyles.btn}>
+          <CustomButton onPress={() => navigation.navigate('Game', { level: 'medium', username: route.params.username })} style={globalStyles.btn}>
             Medium 🔒
           </CustomButton>
         </View>
 
         <View style={globalStyles.btnContainer}>
-          <CustomButton onPress={() => navigation.navigate('Game', { level: 'difficult' })} style={globalStyles.btn}>
+          <CustomButton onPress={() => navigation.navigate('Game', { level: 'difficult', username: route.params.username })} style={globalStyles.btn}>
             Difficult 😓
           </CustomButton>
         </View>
@@ -88,7 +88,4 @@ export default function Levels({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-  bottomContainer: {
-    justifyContent: 'flex-end',
-},
 });

@@ -24,6 +24,7 @@ const globalStyles = StyleSheet.create({
         textAlign: 'center',
     },
     text: {
+        margin: 15,
         fontSize: 14,
         textAlign: 'center',
     },

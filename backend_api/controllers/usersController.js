@@ -1,18 +1,10 @@
-const express = require('express');
-const router = express.Router();
 const bcrypt = require('bcrypt');
-const User = require('../model/User');
+const jwt = require('jsonwebtoken');
+const User = require('../models/User');
 
-// Generate unique user_id
-function generateUniqueUserId() {
-    return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-}
-
-// Create a new user
-router.post('/create', async (req, res) => {
+// Controller methods
+const createUser = async (req, res) => {
     const { username, password } = req.body;
-    console.log(username)
-    console.log(password)
 
     try {
         // Check if username already exists
@@ -21,9 +13,6 @@ router.post('/create', async (req, res) => {
             return res.status(400).json({ message: 'Username already exists.' });
         }
 
-        // Generate unique user_id
-        const user_id = generateUniqueUserId();
-
         // Hash the password
         const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -31,21 +20,17 @@ router.post('/create', async (req, res) => {
         const newUser = new User({
             username,
             password: hashedPassword,
-            user_id
         });
 
         await newUser.save();
-        res.status(201).json({ message: 'User created successfully.', user_id });
+        res.status(201).json({ message: 'User created successfully.', user: newUser });
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Server error.' });
     }
-});
+};
 
-
-
-// Log in
-router.post('/login', async (req, res) => {
+const loginUser = async (req, res) => {
     const { username, password } = req.body;
 
     try {
@@ -59,25 +44,24 @@ router.post('/login', async (req, res) => {
 
         // Compare passwords
         const passwordMatch = await bcrypt.compare(password, user.password);
+
+        // Check if passwords match
         if (!passwordMatch) {
             return res.status(401).json({ message: 'Invalid credentials.' });
         }
 
-        // Create JWT token
-        const token = jwt.sign({ user_id: user.user_id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        console.log(`Login successful for user ${username}`);
 
-        // Send token in response
-        res.status(200).json({ message: 'Login successful.', token });
+        res.status(200).json({ message: 'Login successful.' });
     } catch (error) {
-        console.error(error);
+        console.error('Login error:', error);
         res.status(500).json({ error: 'Server error.' });
     }
-});
+};
 
-// Log out
-router.post('/logout', (req, res) => {
 
-    res.status(200).json({ message: 'Logout successful.' });
-});
-
-module.exports = router;
+// Export controller methods
+module.exports = {
+    createUser,
+    loginUser,
+};
