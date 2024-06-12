@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
-import { View, Text, TouchableOpacity, SafeAreaView } from "react-native";
-import constants from "../constants";
+import { View, SafeAreaView, StyleSheet } from "react-native";
+import CustomButton from './CustomButton';
+import CustomText from './CustomText';
+import globalStyles from '../GlobalStyles';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Levels({ navigation }) {
@@ -53,38 +55,40 @@ export default function Levels({ navigation }) {
 
 
   return (
-    <SafeAreaView style={[constants.safeArea, { justifyContent: "space-between" }]}>
-      <Text style={constants.logoText}>Levels 🪜</Text>
-      <View style={{ alignItems: 'center', marginBottom: 10, }}>
-        <TouchableOpacity
-          style={constants.kButton}
-          onPress={() => navigation.navigate('Game')}>
-          <Text style={constants.btnText} >Simple ✅ </Text>
-        </TouchableOpacity>
+    <SafeAreaView style={globalStyles.safeArea}>
+      <CustomText style={globalStyles.title}>Levels 🪜</CustomText>
 
-        <TouchableOpacity
-          style={constants.kButton}
-          onPress={() => navigation.navigate('Game')}>
-          <Text style={constants.btnText}> Medium 🔒</Text>
-        </TouchableOpacity>
+      <View style={globalStyles.wrapper}>
+        <View style={globalStyles.btnContainer}>
+          <CustomButton onPress={() => navigation.navigate('Game', { level: 'simple' })} style={globalStyles.btn}>
+            Simple ✅
+          </CustomButton>
+        </View>
 
-        <TouchableOpacity
-          style={constants.kButton}
-          onPress={() => navigation.navigate('Game')}>
-          <Text style={constants.btnText}> Difficult 😓</Text>
-        </TouchableOpacity>
+        <View style={globalStyles.btnContainer}>
+          <CustomButton onPress={() => navigation.navigate('Game', { level: 'medium' })} style={globalStyles.btn}>
+            Medium 🔒
+          </CustomButton>
+        </View>
 
+        <View style={globalStyles.btnContainer}>
+          <CustomButton onPress={() => navigation.navigate('Game', { level: 'difficult' })} style={globalStyles.btn}>
+            Difficult 😓
+          </CustomButton>
+        </View>
       </View>
-      <View style={{ alignItems: 'center', padding: 16 }}>
-        <TouchableOpacity
-          style={constants.kButton}
-          onPress={() => navigation.navigate('HomeScreen')}>
-          <Text style={constants.btnText}>Home</Text>
-        </TouchableOpacity>
 
-        <Text style={constants.whiteText} >Caudate 🧠</Text>
-        <Text style={constants.lightGrayText}>Improve your life, your attention 👀 , and focus 🧘.</Text>
+      <View style={globalStyles.bottomContainer}>
+        <CustomText style={globalStyles.subtitle}>Caudate 🧠</CustomText>  
+        <CustomText style={globalStyles.text}>Improve your life, your attention 👀 , and focus 🧘</CustomText>
       </View>
+
     </SafeAreaView>
   );
 }
+
+const styles = StyleSheet.create({
+  bottomContainer: {
+    justifyContent: 'flex-end',
+},
+});

@@ -36,10 +36,10 @@ const lightTheme = {
     primary: '#ffffff',
     accent: '#00B386',
     background: '#1cb0f6',
-    text: '#000000',
+    text: '#FFFFFF',
     button: {
-      text: '#FFFFFF',
-      background: '#FF5733',
+      text: '#000000',
+      background: '#FFFFFF',
     },
   },
 };
@@ -53,8 +53,8 @@ const darkTheme = {
     background: '#134f5c',
     text: '#FFFFFF',
     button: {
-      text: '#000000',
-      background: '#FF5733',
+      text: '#FFFFFF',
+      background: '#59838c',
     },
   },
 };
