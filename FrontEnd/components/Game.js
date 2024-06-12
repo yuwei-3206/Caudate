@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { View, StyleSheet, Dimensions, SafeAreaView } from "react-native";
+import { View, StyleSheet, Dimensions, SafeAreaView, TouchableOpacity, Text } from "react-native";
 import { Button } from 'react-native-paper';
 import CustomButton from './CustomButton';
 import CustomText from './CustomText';
@@ -95,6 +95,20 @@ export default function Game({ navigation, route }) {
         <CustomText>{time}s</CustomText>
         <CustomText>{result}</CustomText>
       </View>
+      
+
+
+      <View style={{ alignItems: 'center', padding: 16 }}>
+        <TouchableOpacity
+          style={constantStyles.kButton}
+          onPress={() => navigation.navigate('Dashboard')}>
+          <Text style={constantStyles.btnText}>Level Select</Text>
+        </TouchableOpacity>
+
+        
+      </View>
+
+
     </SafeAreaView>
   );
 };

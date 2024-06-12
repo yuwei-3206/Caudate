@@ -76,6 +76,12 @@ export default function Levels({ navigation }) {
 
       </View>
       <View style={{ alignItems: 'center', padding: 16 }}>
+        <TouchableOpacity
+          style={constants.kButton}
+          onPress={() => navigation.navigate('HomeScreen')}>
+          <Text style={constants.btnText}>Home</Text>
+        </TouchableOpacity>
+
         <Text style={constants.whiteText} >Caudate 🧠</Text>
         <Text style={constants.lightGrayText}>Improve your life, your attention 👀 , and focus 🧘.</Text>
       </View>

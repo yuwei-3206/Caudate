@@ -1,5 +1,6 @@
 import { useEffect } from "react";
-import { View, Text } from "react-native";
+import { View, StyleSheet, Dimensions,  TouchableOpacity, Text } from "react-native";
+
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { SafeAreaView } from "react-native-safe-area-context";
 import constantStyles from "../constants";
@@ -58,6 +59,16 @@ export default function Score({ navigation, route }) {
       <View style={{ flex: 1, alignItems: "center", justifyContent: "flex-start", gap: 8, margin: 8 }}>
         <Text style={constantStyles.lightGrayText}>Score</Text>
         <Text style={{ margin: 30, fontSize: 20 }}>{score}s</Text>
+      </View>
+
+      <View style={{ alignItems: 'center', padding: 16 }}>
+        <TouchableOpacity
+          style={constantStyles.kButton}
+          onPress={() => navigation.navigate('Game')}>
+          <Text style={constantStyles.btnText}>Retry</Text>
+        </TouchableOpacity>
+
+        
       </View>
     </SafeAreaView>
 
