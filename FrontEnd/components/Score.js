@@ -4,65 +4,61 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import CustomText from './CustomText';
 import CustomButton from './CustomButton';
 import globalStyles from '../GlobalStyles';
+import { useUser } from '../UserContext';
 
-const Score = ({ navigation, route }) => {
-  const { username } = route.params || {};
+const Score = ({ navigation }) => {
   const [gameRecords, setGameRecords] = useState([]);
-  const [isLoading, setIsLoading] = useState(true); // Track loading state
+  const [isLoading, setIsLoading] = useState(true);
+  const { currentUser } = useUser();
 
   useEffect(() => {
-    fetchGameRecords();
-  }, []);
+    if (currentUser && currentUser.username) {
+      fetchGameRecords(currentUser.username);
+    } else {
+      fetchGameRecords();
+    }
+  }, [currentUser]);
 
-  const fetchGameRecords = async () => {
+  const fetchGameRecords = async (username) => {
     try {
       let records = [];
 
       if (username) {
-        // Fetch authenticated user records from backend
         const response = await fetch(`http://10.0.0.176:3000/api/scores/${username}`);
         if (!response.ok) {
-          console.error(`Failed to fetch game records with status ${response.status}`);
-          Alert.alert('Error', 'Failed to fetch game records. Please try again later.');
-          setIsLoading(false);
-          return;
+          throw new Error(`Failed to fetch game records with status ${response.status}`);
         }
         records = await response.json();
       } else {
-        // Fetch guest user records from local storage
         const gameRecordsStr = await AsyncStorage.getItem('gameRecords');
         if (gameRecordsStr) {
           records = JSON.parse(gameRecordsStr);
         }
       }
 
-      // Sort and limit records to display
       records.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
       records = records.slice(0, 5);
 
-      // Filter records by username if available
       if (username) {
         records = records.filter(record => record.username === username);
       }
 
       setGameRecords(records);
-      setIsLoading(false); // Set loading state to false after fetching records
+      setIsLoading(false);
     } catch (error) {
       console.error('Error fetching game records:', error);
       Alert.alert('Error', 'Failed to fetch game records. Please try again later.');
-      setIsLoading(false); // Set loading state to false on error
+      setIsLoading(false);
     }
   };
 
-  const renderGameRecord = ({ item }) => {
-    return (
-      <View style={styles.item}>
-        <CustomText style={styles.scoreText}>Score: {item.score}s</CustomText>
-        <CustomText style={styles.levelText}>Level: {item.level}</CustomText>
-        <CustomText style={styles.timestampText}>Timestamp: {item.timestamp}</CustomText>
-      </View>
-    );
-  };
+  const renderGameRecord = ({ item }) => (
+    <View style={styles.item}>
+      <CustomText style={styles.scoreText}>Score: {item.score}s</CustomText>
+      <CustomText style={styles.levelText}>Level: {item.level}</CustomText>
+      <CustomText style={styles.timestampText}>Timestamp: {item.timestamp}</CustomText>
+    </View>
+  );
 
   if (isLoading) {
     return (
@@ -72,12 +68,12 @@ const Score = ({ navigation, route }) => {
     );
   }
 
-  if (!gameRecords.length && username) {
+  if (!gameRecords.length && (currentUser && currentUser.username)) {
     return (
       <SafeAreaView style={globalStyles.safeArea}>
-        <CustomText style={globalStyles.subtitle}>No game records found.</CustomText>
-        <CustomButton onPress={() => navigation.navigate('Game')}>
-          Retry 🚀
+        <CustomText style={globalStyles.subtitle}>No game records found</CustomText>
+        <CustomButton onPress={() => navigation.navigate('Dashboard')}>
+          Start Playing 🚀
         </CustomButton>
       </SafeAreaView>
     );
@@ -95,8 +91,8 @@ const Score = ({ navigation, route }) => {
       <View style={globalStyles.bottomContainer}>
         <View style={globalStyles.wrapper}>
           <View style={globalStyles.btnContainer}>
-            <CustomButton onPress={() => navigation.navigate('Game')}>
-              Retry 🚀
+            <CustomButton onPress={() => navigation.navigate('Dashboard')}>
+              Play again 🚀
             </CustomButton>
           </View>
         </View>

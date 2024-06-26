@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
-import { View, StyleSheet, SafeAreaView, Alert } from "react-native";
+import { View, StyleSheet, SafeAreaView, Alert, TouchableOpacity, Text } from "react-native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Button } from 'react-native-paper';
+import { useUser } from '../UserContext';
 import CustomButton from './CustomButton';
 import CustomText from './CustomText';
 import globalStyles from '../GlobalStyles';
@@ -14,8 +14,9 @@ const Game = ({ navigation, route }) => {
   const [progress, setProgress] = useState(0);
   const [result, setResult] = useState("");
   const [numbers, setNumbers] = useState([]);
-  const [username, setUsername] = useState(route.params?.username || '');
+  const { currentUser } = useUser();
   const [level, setLevel] = useState(route.params?.level || "simple");
+  
 
   useEffect(() => {
     const totalButtons = level === "simple" ? 9 : level === "medium" ? 16 : level === "difficult" ? 25 : 9;
@@ -37,7 +38,7 @@ const Game = ({ navigation, route }) => {
     if (!running) return;
     if (num === progress) {
       if (progress === numbers.length) {
-        setResult("Complete!");
+        setResult("Completed!");
         clearInterval(intervalRef.current);
         setRunning(false);
 
@@ -53,7 +54,7 @@ const Game = ({ navigation, route }) => {
 
   const saveGameRecord = async (time) => {
     try {
-      if (!username) {
+      if (!currentUser.username) {
         // Guest user: save record to AsyncStorage
         const gameRecord = {
           score: time,
@@ -72,7 +73,7 @@ const Game = ({ navigation, route }) => {
       } else {
         // Logged-in user: save record to backend
         const gameRecord = {
-          username: username,
+          username: currentUser.username,
           score: time,
           level: level,
           timestamp: new Date().toISOString()
@@ -117,16 +118,14 @@ const Game = ({ navigation, route }) => {
               const num = numbers[index];
               const isClickable = running && progress === num;
               return (
-                <Button
+                <TouchableOpacity
                   key={index}
-                  mode="contained"
                   onPress={() => handlePress(num)}
                   disabled={!isClickable}
                   style={[styles.numBtn, { backgroundColor: isClickable ? "white" : "white", borderColor: isClickable ? "darkgrey" : "darkgrey" }]}
-                  labelStyle={{ color: isClickable ? "red" : "darkgrey" }}
                 >
-                  {num}
-                </Button>
+                  <CustomText style={{ color: isClickable ? "red" : "darkgrey" }}>{num}</CustomText>
+                </TouchableOpacity>
               );
             })}
           </View>
@@ -140,13 +139,13 @@ const Game = ({ navigation, route }) => {
         </View>
         <View style={globalStyles.btnContainer}>
           <CustomButton
-            onPress={() => navigation.navigate('Score', { level: level, username: username })}
+            onPress={() => navigation.navigate('Score', { level: level, username: currentUser.username })}
             disabled={running}>
             Get Score
           </CustomButton>
         </View>
         <CustomText style={globalStyles.subtitle}>{time}s</CustomText>
-        <CustomText style={globalStyles.subtitle}>{result}</CustomText>
+        <CustomText style={globalStyles.text}>{result}</CustomText>
       </View>
       <View style={globalStyles.bottomContainer}>
         <View style={globalStyles.wrapper}>

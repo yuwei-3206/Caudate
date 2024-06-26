@@ -20,9 +20,9 @@ mongoose.connect(MONGO_URI, {
 
 // Configure CORS
 const corsOptions = {
-    origin: 'http://10.0.0.176:3000', // Replace with your frontend URL
-    methods: ['GET', 'POST'], // Specify the allowed HTTP methods
-    allowedHeaders: ['Content-Type', 'Authorization'], // Specify the allowed headers
+    origin: 'http://10.0.0.176:3000',
+    methods: ['GET', 'POST'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
 };
 
 // Use cors middleware with options

@@ -2,7 +2,6 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 
-// Controller methods
 const createUser = async (req, res) => {
     const { username, password } = req.body;
 
@@ -50,17 +49,23 @@ const loginUser = async (req, res) => {
             return res.status(401).json({ message: 'Invalid credentials.' });
         }
 
-        console.log(`Login successful for user ${username}`);
+        // Generate JWT token
+        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+            expiresIn: '1h', // Token expires in 1 hour
+        });
 
-        res.status(200).json({ message: 'Login successful.' });
+        console.log(`Login successful for user ${username}`);
+        console.log('Generated token:', token); // Check if token is generated
+        console.log('Username:', user.username); // Check if username is retrieved
+
+        // Send token and username in response
+        res.status(200).json({ message: 'Login successful.', token, username: user.username });
     } catch (error) {
         console.error('Login error:', error);
         res.status(500).json({ error: 'Server error.' });
     }
 };
 
-
-// Export controller methods
 module.exports = {
     createUser,
     loginUser,

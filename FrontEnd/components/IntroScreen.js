@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { View, StyleSheet, Animated, TextInput, TouchableOpacity, Alert } from "react-native";
+import { useUser } from '../UserContext';
 import CustomText from './CustomText';
 import CustomButton from './CustomButton';
 import globalStyles from '../GlobalStyles';
@@ -7,6 +8,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function IntroScreen({ navigation }) {
     //const fadeAnim = useRef(new Animated.Value(0)).current;
+
+    const { selectUser } = useUser();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
@@ -41,26 +44,38 @@ export default function IntroScreen({ navigation }) {
                 },
                 body: JSON.stringify({ username, password }),
             });
-
+    
             if (!response.ok) {
                 console.error(`Login failed with status ${response.status}`);
                 Alert.alert('Login failed', 'An error occurred. Please try again.');
                 return;
             }
-
+    
             const data = await response.json();
             console.log('Login successful:', data);
+            
+    
+            // Ensure data.token and data.username are defined
+            if (!data.token || !data.username) {
+                console.error('Token or username not received from server');
+                Alert.alert('Login failed', 'An error occurred. Please try again.');
+                return;
+            }
 
-            navigation.navigate('HomeScreen', { username });
+            // Save token and set user context
+            await AsyncStorage.setItem('userToken', data.token);
+            selectUser(data.username);
+    
+            navigation.replace('HomeScreen');
         } catch (error) {
             console.error('Login error:', error);
             Alert.alert('Login error', 'An error occurred. Please try again.');
         }
     };
-
+    
 
     return (
-        <Animated.View style={styles.container}>
+        <View style={styles.container}>
             <CustomText style={styles.title}>Caudate 🧠</CustomText>
             <View style={styles.formContainer}>
                 <TextInput
@@ -90,7 +105,7 @@ export default function IntroScreen({ navigation }) {
             <TouchableOpacity onPress={() => navigation.navigate('HomeScreen')}>
                 <CustomText style={[globalStyles.text, {textDecorationLine: 'underline'}]}>Enter as guest</CustomText>
             </TouchableOpacity>
-        </Animated.View>
+        </View>
     );
 }
 

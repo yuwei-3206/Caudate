@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, StyleSheet, TextInput, TouchableOpacity } from "react-native";
+import { View, StyleSheet, TextInput, Alert } from "react-native";
 import CustomText from './CustomText';
 import CustomButton from './CustomButton';
 
@@ -21,10 +21,14 @@ export default function SignUp({ navigation }) {
       });
   
       if (response.ok) {
-        const data = await response.json();
-        console.log('User created successfully:', data);
-
-        navigation.navigate('HomeScreen', { username: data.user.username });
+        // Display success alert
+        Alert.alert(
+          'Signed up successfully!',
+          'You can now log in',
+          [
+            { text: 'OK', onPress: () => navigation.navigate('IntroScreen') }
+          ]
+        );
       } else {
         const errorData = await response.json();
         console.error('Failed to create user:', errorData);
@@ -71,6 +75,7 @@ const styles = StyleSheet.create({
   },
   formContainer: {
     width: '80%',
+    alignItems: 'center',
   },
   input: {
     width: '100%',
