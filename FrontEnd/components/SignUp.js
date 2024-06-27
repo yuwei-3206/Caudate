@@ -20,7 +20,7 @@ export default function SignUp({ navigation }) {
         }),
       });
   
-      if (response.ok) {
+      if (response.status === 201) {
         // Display success alert
         Alert.alert(
           'Signed up successfully!',
@@ -32,11 +32,11 @@ export default function SignUp({ navigation }) {
       } else {
         const errorData = await response.json();
         console.error('Failed to create user:', errorData);
-        // Handle error appropriately, e.g., display error message to the user
+        Alert.alert('Sign Up Failed', errorData.message || 'An error occurred. Please try again.');
       }
     } catch (error) {
       console.error('Error creating user:', error);
-      // Handle error appropriately, e.g., display error message to the user
+      Alert.alert('Error', 'An error occurred. Please try again.');
     }
   };
 

@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
-import { View, StyleSheet, SafeAreaView, Alert, TouchableOpacity, Text } from "react-native";
+import { View, StyleSheet, SafeAreaView, Alert, TouchableOpacity } from "react-native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useUser } from '../UserContext';
-import CustomButton from './CustomButton';
 import CustomText from './CustomText';
 import globalStyles from '../GlobalStyles';
+import { IconButton, useTheme } from 'react-native-paper';
 
 const Game = ({ navigation, route }) => {
   const [time, setTime] = useState(0);
@@ -16,7 +16,8 @@ const Game = ({ navigation, route }) => {
   const [numbers, setNumbers] = useState([]);
   const { currentUser } = useUser();
   const [level, setLevel] = useState(route.params?.level || "simple");
-  
+
+  const theme = useTheme();
 
   useEffect(() => {
     const totalButtons = level === "simple" ? 9 : level === "medium" ? 16 : level === "difficult" ? 25 : 9;
@@ -54,7 +55,7 @@ const Game = ({ navigation, route }) => {
 
   const saveGameRecord = async (time) => {
     try {
-      if (!currentUser.username) {
+      if (currentUser === null) {
         // Guest user: save record to AsyncStorage
         const gameRecord = {
           score: time,
@@ -70,7 +71,7 @@ const Game = ({ navigation, route }) => {
         }
         await AsyncStorage.setItem('gameRecords', JSON.stringify(gameRecords));
         console.log('Game record saved locally:', gameRecord);
-      } else {
+      } else if(currentUser.username) {
         // Logged-in user: save record to backend
         const gameRecord = {
           username: currentUser.username,
@@ -105,6 +106,15 @@ const Game = ({ navigation, route }) => {
     setNumbers(shuffledNumbers);
   };
 
+  const restartGame = () => {
+    setProgress(0);
+    setResult("");
+    setTime(0);
+    setRunning(false);
+    clearInterval(intervalRef.current);
+    shuffleNumbers(numbers.length);
+  };
+
   const numColumns = Math.sqrt(numbers.length);
 
   return (
@@ -131,29 +141,54 @@ const Game = ({ navigation, route }) => {
           </View>
         ))}
       </View>
-      <View style={globalStyles.wrapper}>
-        <View style={globalStyles.btnContainer}>
-          <CustomButton onPress={startGame} disabled={running}>
-            Start Game
-          </CustomButton>
+      <View style={globalStyles.rowView}>
+        <View>
+          <IconButton
+            icon="play"
+            color={theme.colors.button.text}
+            size={30}
+            style={{ backgroundColor: theme.colors.button.background, borderRadius: 50 }}
+            onPress={startGame}
+            disabled={running}
+          />
         </View>
-        <View style={globalStyles.btnContainer}>
-          <CustomButton
-            onPress={() => navigation.navigate('Score', { level: level, username: currentUser.username })}
-            disabled={running}>
-            Get Score
-          </CustomButton>
+        <View>
+          <IconButton
+            icon="reload"
+            color={theme.colors.button.text}
+            size={30}
+            style={{ backgroundColor: theme.colors.button.background, borderRadius: 50 }}
+            onPress={restartGame}
+          />
         </View>
-        <CustomText style={globalStyles.subtitle}>{time}s</CustomText>
-        <CustomText style={globalStyles.text}>{result}</CustomText>
       </View>
+
+      <CustomText style={globalStyles.subtitle}>{time}s</CustomText>
+      <CustomText style={globalStyles.text}>{result}</CustomText>
+
       <View style={globalStyles.bottomContainer}>
-        <View style={globalStyles.wrapper}>
-          <View style={globalStyles.btnContainer}>
-            <CustomButton onPress={() => navigation.navigate('Dashboard')}>
-              Select levels 🚀
-            </CustomButton>
-          </View>
+        <View style={globalStyles.rowView}>
+            <IconButton
+              icon="home"
+              color={theme.colors.button.text}
+              size={30}
+              style={{ backgroundColor: theme.colors.button.background, borderRadius: 50 }}
+              onPress={() => navigation.navigate('HomeScreen')}
+            />
+          <IconButton
+            icon="earth"
+            color={theme.colors.button.text}
+            size={30}
+            style={{ backgroundColor: theme.colors.button.background, borderRadius: 50 }}
+            onPress={() => navigation.navigate('TopScores', { level })}
+          />
+          <IconButton
+            icon="trophy"
+            color={theme.colors.button.text}
+            size={30}
+            style={{ backgroundColor: theme.colors.button.background, borderRadius: 50 }}
+            onPress={() => navigation.navigate('Score', { level: level, username: currentUser?.username || null })}
+          />
         </View>
       </View>
     </SafeAreaView>
@@ -174,6 +209,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderWidth: 1,
   },
+  
 });
 
 export default Game;

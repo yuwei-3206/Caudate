@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { View, StyleSheet, Switch, SafeAreaView, Alert } from "react-native";
+import React, { useEffect, useState } from "react";
+import { View, StyleSheet, Switch, SafeAreaView, Alert, TouchableOpacity } from "react-native";
 import { useTheme } from 'react-native-paper';
 import { useUser } from '../UserContext';
 import CustomButton from './CustomButton';
@@ -9,68 +9,91 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function HomeScreen({ navigation, toggleTheme, isDarkMode }) {
   const theme = useTheme();
-  const { currentUser, selectUser, logout } = useUser();
+  const { currentUser, logout } = useUser();
+  const [loading, setLoading] = useState(true);
+  const [userData, setUserData] = useState(null);
 
   useEffect(() => {
     const fetchUserData = async () => {
-      try {
-        const token = await AsyncStorage.getItem('userToken');
-        if (token) {
-          const response = await fetch('http://10.0.0.176:3000/api/users/me', {
-            headers: {
-              'Authorization': `Bearer ${token}`,
-            },
-          });
+        try {
+            const token = await AsyncStorage.getItem('userToken');
+            if (token) {
+                const response = await fetch('http://10.0.0.176:3000/api/users/me', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                    },
+                });
 
-          if (response.ok) {
-            const data = await response.json();
-            selectUser(data.username);
-          }
+                if (response.ok) {
+                    const data = await response.json();
+                    setUserData(data);
+                    console.log('User data: ', data);
+                } else {
+                    console.error('Failed to fetch user data:', response.status, response.statusText);
+                }
+            }
+        } catch (error) {
+            console.error('Error fetching user data:', error);
+        } finally {
+            setLoading(false);
         }
-      } catch (error) {
-        console.error('Error fetching user data:', error);
-      }
     };
 
     fetchUserData();
-  }, [selectUser]);
+}, []);
 
   const handleLogout = async () => {
     try {
-      // Clear token from AsyncStorage
       await AsyncStorage.removeItem('userToken');
-      // Clear currentUser in context
-      logout(currentUser.username);
-      // Navigate to intro screen
+      logout();
       navigation.navigate('IntroScreen');
+      console.log('Logout successfully. Current user: ', currentUser);
     } catch (error) {
       console.error('Error logging out:', error);
       Alert.alert('Logout Failed', 'An error occurred while logging out. Please try again.');
     }
   };
 
+  const welcomeText = currentUser ? `Welcome ${currentUser.username}!` : 'Welcome!';
+
+  const handleViewScores = () => {
+    const username = currentUser?.username || null;
+    navigation.navigate('Score', { username });
+  };
+
   return (
     <SafeAreaView style={globalStyles.safeArea}>
-      <CustomText style={globalStyles.title}>Caudate 🧠</CustomText>  
-      {currentUser ? (
-        <View style={styles.welcomeContainer}>
-          <CustomText style={styles.welcomeText}>Welcome {currentUser.username}!</CustomText>
-          <View style={styles.scoreButtonContainer}>
-            <CustomButton onPress={() => navigation.navigate('Score', { username: currentUser.username })}>
-              View Your Scores 📈
-            </CustomButton>
-          </View>
+      <CustomText style={globalStyles.title}>Caudate 🧠</CustomText> 
 
-          <View style={styles.logoutButtonContainer}>
-            <CustomButton onPress={handleLogout}>
-              Logout
-            </CustomButton>
+      <View style={styles.welcomeContainer}>
+        <CustomText style={styles.welcomeText}>{welcomeText}</CustomText>
+        <View style={styles.listContainer}>
+          <View style={styles.item}>
+            <TouchableOpacity
+              style={[styles.button, { backgroundColor: theme.colors.button.background }]}
+              onPress={handleViewScores}
+            >
+              <CustomText style={{ color: theme.colors.button.text }}>View Your Scores 📈</CustomText>
+            </TouchableOpacity>
           </View>
+          
+          {currentUser && (
+            <View style={styles.item}>
+              <TouchableOpacity
+                style={[styles.button, { backgroundColor: theme.colors.button.background }]}
+                onPress={handleLogout}
+              >
+                <CustomText style={{ color: theme.colors.button.text }}>Logout</CustomText>
+              </TouchableOpacity>
+            </View>              
+          )}
 
+          <View style={styles.item}>
+            <CustomText>Switch to {isDarkMode ? "Light" : "Dark"} mode</CustomText>
+            <Switch value={isDarkMode} onValueChange={toggleTheme} />
+          </View>
         </View>
-      ) : null}
-      <View style={styles.switchContainer}>
-        <Switch value={isDarkMode} onValueChange={toggleTheme} />
+
       </View>
 
       <View style={globalStyles.bottomContainer}>
@@ -87,19 +110,21 @@ export default function HomeScreen({ navigation, toggleTheme, isDarkMode }) {
 }
 
 const styles = StyleSheet.create({
-  switchContainer: {
-    alignItems: 'center',
-    marginBottom: 30,
-  },
   welcomeContainer: {
-    alignItems: 'center',
-    marginBottom: 20,
+    padding: 30,
+  },
+  listContainer: {
+    marginBottom: 50,
   },
   welcomeText: {
     fontSize: 18,
-    marginBottom: 10,
+    marginBottom: 50,
   },
-  scoreButtonContainer: {
-    marginBottom: 10,
+  item: {
+    fontSize: 18,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingVertical: 10,
   },
 });

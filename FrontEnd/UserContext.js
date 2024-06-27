@@ -10,17 +10,15 @@ export const UserProvider = ({ children }) => {
     if (username) {
       const user = { username };
       setCurrentUser(user);
-      setLoggedInUsers(prevUsers => [...prevUsers, user]);
+      //setLoggedInUsers(prevUsers => [...prevUsers, user]);
     } else {
       setCurrentUser(null);
     }
   };
 
-  const logout = (username) => {
-    setLoggedInUsers(prevUsers => prevUsers.filter(user => user.username !== username));
-    if (currentUser && currentUser.username === username) {
-      setCurrentUser(null);
-    }
+  const logout = () => {
+    //setLoggedInUsers(prevUsers => prevUsers.filter(user => user.username !== username));
+    setCurrentUser(null);
   };
 
   return (

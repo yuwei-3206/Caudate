@@ -30,7 +30,35 @@ const saveScore = async (req, res) => {
     }
 };
 
+const getTopScoresByLevel = async (req, res) => {
+    const { level } = req.params;
+
+    try {
+        console.log('Fetching top scores for level:', level);
+        let topScores = await Score.find({ level })
+            .sort({ score: 1 })
+            .limit(30);
+
+            console.log('Top scores retrieved:', topScores);
+        if (topScores.length === 0) {
+            return res.status(404).json({ error: 'No scores found for this level.' });
+        }
+
+        // If less than 10 scores found, send them all
+        if (topScores.length < 10) {
+            return res.status(200).json(topScores);
+        }
+
+        res.status(200).json(topScores);
+    } catch (error) {
+        console.error('Error fetching top scores:', error);
+        res.status(500).json({ error: 'Server error.' });
+    }
+};
+
+
 module.exports = {
     getScoresByUsername,
-    saveScore
+    saveScore,
+    getTopScoresByLevel,
 };

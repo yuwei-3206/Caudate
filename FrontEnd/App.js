@@ -12,6 +12,7 @@ import Dashboard from './components/Dashboard';
 import Game from './components/Game';
 import Score from './components/Score';
 import SignUp from './components/SignUp';
+import TopScores from './components/TopScores';
 
 const Stack = createNativeStackNavigator();
 
@@ -59,6 +60,7 @@ const AppNavigator = () => {
             <Stack.Screen name="Dashboard" component={Dashboard} />
             <Stack.Screen name="Game" component={Game} />
             <Stack.Screen name="Score" component={Score} />
+            <Stack.Screen name="TopScores" component={TopScores} />
           </Stack.Navigator>
         </NavigationContainer>
       </PaperProvider>

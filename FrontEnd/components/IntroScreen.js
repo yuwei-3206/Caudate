@@ -9,7 +9,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 export default function IntroScreen({ navigation }) {
     //const fadeAnim = useRef(new Animated.Value(0)).current;
 
-    const { selectUser } = useUser();
+    const { selectUser, currentUser } = useUser();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
@@ -44,34 +44,36 @@ export default function IntroScreen({ navigation }) {
                 },
                 body: JSON.stringify({ username, password }),
             });
-    
-            if (!response.ok) {
-                console.error(`Login failed with status ${response.status}`);
-                Alert.alert('Login failed', 'An error occurred. Please try again.');
-                return;
-            }
-    
-            const data = await response.json();
-            console.log('Login successful:', data);
-            
-    
-            // Ensure data.token and data.username are defined
-            if (!data.token || !data.username) {
-                console.error('Token or username not received from server');
-                Alert.alert('Login failed', 'An error occurred. Please try again.');
-                return;
-            }
 
-            // Save token and set user context
-            await AsyncStorage.setItem('userToken', data.token);
-            selectUser(data.username);
+            const data = await response.json();
     
-            navigation.replace('HomeScreen');
+            if (response.status === 200) {
+                console.log('Login successful:', data);
+                
+                // Save token and set user context
+                await AsyncStorage.setItem('userToken', data.token);
+                selectUser(data.username);
+            } else {
+                console.error(`Login failed with status ${response.status}`);
+                Alert.alert('Login failed', data.message || 'An error occurred. Please try again.');
+            }
         } catch (error) {
             console.error('Login error:', error);
             Alert.alert('Login error', 'An error occurred. Please try again.');
         }
     };
+
+    const handleEnterAsGuest = () => {
+        selectUser(null);
+        navigation.navigate('HomeScreen');
+    };
+
+    useEffect(() => {
+        if (currentUser) {
+            console.log('Current User:', currentUser);
+            navigation.replace('HomeScreen');
+        }
+    }, [currentUser]);
     
 
     return (
@@ -102,7 +104,7 @@ export default function IntroScreen({ navigation }) {
             </View>
 
             <CustomText> or </CustomText>
-            <TouchableOpacity onPress={() => navigation.navigate('HomeScreen')}>
+            <TouchableOpacity onPress={handleEnterAsGuest}>
                 <CustomText style={[globalStyles.text, {textDecorationLine: 'underline'}]}>Enter as guest</CustomText>
             </TouchableOpacity>
         </View>

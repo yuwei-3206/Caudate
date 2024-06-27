@@ -37,7 +37,6 @@ const Score = ({ navigation }) => {
       }
 
       records.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
-      records = records.slice(0, 5);
 
       if (username) {
         records = records.filter(record => record.username === username);
@@ -52,13 +51,18 @@ const Score = ({ navigation }) => {
     }
   };
 
-  const renderGameRecord = ({ item }) => (
-    <View style={styles.item}>
-      <CustomText style={styles.scoreText}>Score: {item.score}s</CustomText>
-      <CustomText style={styles.levelText}>Level: {item.level}</CustomText>
-      <CustomText style={styles.timestampText}>Timestamp: {item.timestamp}</CustomText>
-    </View>
-  );
+  const renderGameRecord = ({ item }) => {
+    const formattedDate = new Date(item.timestamp).toISOString().split('T')[0];
+    
+    return (
+        <View style={styles.recordsRow}>
+          <CustomText style={styles.recordsText}>{formattedDate}</CustomText>
+          <CustomText style={styles.recordsText}>{item.level}</CustomText>
+          <CustomText style={styles.recordsText}>{item.score}s</CustomText>
+          
+        </View>
+    );
+  };
 
   if (isLoading) {
     return (
@@ -81,12 +85,21 @@ const Score = ({ navigation }) => {
 
   return (
     <SafeAreaView style={globalStyles.safeArea}>
-      <CustomText style={globalStyles.title}>Game Records</CustomText>
-      <FlatList
-        data={gameRecords}
-        renderItem={renderGameRecord}
-        keyExtractor={(item, index) => index.toString()}
-      />
+      <CustomText style={globalStyles.title}>Game History</CustomText>
+
+      <View style={styles.recordsView}>
+        <View style={styles.recordsRow}>
+            <CustomText style={styles.rowText}>Date</CustomText>
+            <CustomText style={styles.rowText}>Level</CustomText>
+            <CustomText style={styles.rowText}>Score</CustomText>
+        </View>
+
+        <FlatList
+          data={gameRecords}
+          renderItem={renderGameRecord}
+          keyExtractor={(item, index) => index.toString()}
+        />
+      </View>
 
       <View style={globalStyles.bottomContainer}>
         <View style={globalStyles.wrapper}>
@@ -102,21 +115,23 @@ const Score = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  item: {
-    padding: 20,
-    marginVertical: 8,
+  recordsView: {
+    paddingBottom: '75%',
     marginHorizontal: 16,
+    padding: 20
   },
-  scoreText: {
+  recordsRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'left',
+  },
+  recordsText: {
     fontSize: 16,
+    paddingBottom: 5,
   },
-  levelText: {
-    fontSize: 14,
-    marginTop: 5,
-  },
-  timestampText: {
-    fontSize: 12,
-    marginTop: 5,
+  rowText: {
+    fontSize: 18,
+    paddingBottom: 20,
   },
 });
 

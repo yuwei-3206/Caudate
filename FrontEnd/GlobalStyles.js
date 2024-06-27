@@ -5,7 +5,12 @@ const globalStyles = StyleSheet.create({
     safeArea: {
         flex: 1,
         justifyContent: 'flex-start',
-        paddingTop: 20,
+        paddingTop: 15,
+    },
+    rowView: {
+        flexDirection: 'row',
+        justifyContent: 'space-evenly',
+        alignItems: 'center',
     },
     bottomContainer: {
         position: 'absolute',
@@ -19,7 +24,7 @@ const globalStyles = StyleSheet.create({
         alignSelf: "center"
     },
     subtitle: {
-        margin: 30,
+        margin: 10,
         fontSize: 20,
         textAlign: 'center',
     },
