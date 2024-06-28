@@ -9,19 +9,13 @@ The app includes a backend implementation for users to share their scores via a 
 
 ## Server API Design
 ## Front-end Technology
-### React Native
-Utilized for cross-platform mobile app development, ensuring a native-like experience on both iOS and Android devices.
-### AsyncStorage
-Handles local storage requirements for storing game data and user authentication tokens.
-### Custom Components
-Includes custom UI components like CustomText and CustomButton for consistent design and user interaction.
+- React Native: Utilized for cross-platform mobile app development, ensuring a native-like experience on both iOS and Android devices.
+- AsyncStorage: Handles local storage requirements for storing game data and user authentication tokens.
+- Custom Components: Includes custom UI components like CustomText and CustomButton for consistent design and user interaction.
 
 ## Back-end Technology
-### Node.js with Express
-Powers the server-side logic for handling user authentication, game scores, and data persistence.
-### MongoDB Atlas
-Cloud-based MongoDB database used for storing user profiles, game scores, and other application data securely.
-### RESTful API
-Enables communication between the front end and back end, facilitating user login, game score storage, and retrieval.
+- Node.js with Express: Powers the server-side logic for handling user authentication, game scores, and data persistence.
+- MongoDB Atlas: Cloud-based MongoDB database used for storing user profiles, game scores, and other application data securely.
+- RESTful API: Enables communication between the front end and back end, facilitating user login, game score storage, and retrieval.
 
 
