@@ -67,29 +67,40 @@ export default function HomeScreen({ navigation, toggleTheme, isDarkMode }) {
 
       <View style={styles.welcomeContainer}>
         <CustomText style={styles.welcomeText}>{welcomeText}</CustomText>
-        <View style={styles.listContainer}>
+        <View style={[styles.listContainer, { backgroundColor: theme.colors.primary }]}>
           <View style={styles.item}>
             <TouchableOpacity
-              style={[styles.button, { backgroundColor: theme.colors.button.background }]}
+              style={styles.button}
               onPress={handleViewScores}
             >
-              <CustomText style={{ color: theme.colors.button.text }}>View Your Scores 📈</CustomText>
+              <CustomText style={{ color: theme.colors.text }}>View Your Scores 📈</CustomText>
             </TouchableOpacity>
           </View>
           
-          {currentUser && (
+          {currentUser ? (
             <View style={styles.item}>
               <TouchableOpacity
-                style={[styles.button, { backgroundColor: theme.colors.button.background }]}
+                style={styles.button}
                 onPress={handleLogout}
               >
-                <CustomText style={{ color: theme.colors.button.text }}>Logout</CustomText>
+                <CustomText style={{ color: theme.colors.text }}>Logout</CustomText>
               </TouchableOpacity>
             </View>              
+          ) : (
+            <>
+              <View style={styles.item}>
+                <TouchableOpacity
+                  style={styles.button}
+                  onPress={() => navigation.navigate('SignUp')}
+                >
+                  <CustomText style={{ color: theme.colors.text }}>Sign Up and save your records!</CustomText>
+                </TouchableOpacity>
+              </View>
+            </>
           )}
 
           <View style={styles.item}>
-            <CustomText>Switch to {isDarkMode ? "Light" : "Dark"} mode</CustomText>
+            <CustomText style={{ color: theme.colors.text, paddingVertical: 15 }}>Switch to {isDarkMode ? "Light" : "Dark"} mode</CustomText>
             <Switch value={isDarkMode} onValueChange={toggleTheme} />
           </View>
         </View>
@@ -111,20 +122,29 @@ export default function HomeScreen({ navigation, toggleTheme, isDarkMode }) {
 
 const styles = StyleSheet.create({
   welcomeContainer: {
-    padding: 30,
+    padding: 20,
   },
   listContainer: {
-    marginBottom: 50,
+    marginBottom: 10,
+    borderRadius: 10
   },
   welcomeText: {
     fontSize: 18,
-    marginBottom: 50,
+    marginBottom: 30,
+    paddingLeft: 15
   },
   item: {
     fontSize: 18,
+    paddingHorizontal: 15,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingVertical: 10,
+    
+  },
+  button: {
+    width: '100%',
+    paddingVertical: 15,
+    borderBottomWidth: 1,
+    borderBottomColor: 'white',
   },
 });

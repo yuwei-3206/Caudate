@@ -33,7 +33,7 @@ const lightTheme = {
   ...theme,
   colors: {
     ...theme.colors,
-    primary: '#ffffff',
+    primary: '#72d0fc',
     accent: '#00B386',
     background: '#1cb0f6',
     text: '#FFFFFF',
@@ -48,7 +48,7 @@ const darkTheme = {
   ...theme,
   colors: {
     ...theme.colors,
-    primary: '#FF5733',
+    primary: '#59838c',
     accent: '#00B386',
     background: '#134f5c',
     text: '#FFFFFF',

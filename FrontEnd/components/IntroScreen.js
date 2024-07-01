@@ -1,5 +1,6 @@
-import React, { useState, useEffect, useRef } from "react";
-import { View, StyleSheet, Animated, TextInput, TouchableOpacity, Alert } from "react-native";
+import React, { useState, useEffect } from "react";
+import { View, StyleSheet, TouchableOpacity, Alert, SafeAreaView } from "react-native";
+import { TextInput, useTheme } from 'react-native-paper';
 import { useUser } from '../UserContext';
 import CustomText from './CustomText';
 import CustomButton from './CustomButton';
@@ -7,11 +8,10 @@ import globalStyles from '../GlobalStyles';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function IntroScreen({ navigation }) {
-    //const fadeAnim = useRef(new Animated.Value(0)).current;
-
     const { selectUser, currentUser } = useUser();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const theme = useTheme();
 
     /*useEffect(() => {
         const timer = setTimeout(() => {
@@ -77,21 +77,25 @@ export default function IntroScreen({ navigation }) {
     
 
     return (
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
             <CustomText style={styles.title}>Caudate 🧠</CustomText>
             <View style={styles.formContainer}>
                 <TextInput
-                    style={styles.input}
+                    style={[styles.input, { backgroundColor: theme.colors.background, color: theme.colors.text }]}
                     placeholder="Username"
+                    placeholderTextColor={theme.colors.text}
                     onChangeText={text => setUsername(text)}
                     value={username}
+                    theme={{ colors: { text: theme.colors.text } }}
                 />
                 <TextInput
-                    style={styles.input}
+                    style={[styles.input, { backgroundColor: theme.colors.background, color: theme.colors.text }]}
                     placeholder="Password"
+                    placeholderTextColor={theme.colors.text}
                     onChangeText={text => setPassword(text)}
                     value={password}
                     secureTextEntry={true}
+                    theme={{ colors: { text: theme.colors.text } }}
                 />
                 <CustomButton onPress={handleLogin}>Login</CustomButton>
             </View>
@@ -107,7 +111,7 @@ export default function IntroScreen({ navigation }) {
             <TouchableOpacity onPress={handleEnterAsGuest}>
                 <CustomText style={[globalStyles.text, {textDecorationLine: 'underline'}]}>Enter as guest</CustomText>
             </TouchableOpacity>
-        </View>
+        </SafeAreaView>
     );
 }
 
@@ -127,8 +131,7 @@ const styles = StyleSheet.create({
         width: 300,
         height: 40,
         borderColor: 'white',
-        borderWidth: 1,
-        marginBottom: 10,
+        marginBottom: 20,
         paddingHorizontal: 10,
     },
     rowContainer: {
