@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { View, StyleSheet, Switch, SafeAreaView, Alert, TouchableOpacity } from "react-native";
 import { useTheme } from 'react-native-paper';
-import { useUser } from '../UserContext';
-import CustomButton from './CustomButton';
-import CustomText from './CustomText';
-import globalStyles from '../GlobalStyles';
+import { useUser } from '../constants/UserContext';
+import CustomButton from '../components/CustomButton';
+import CustomText from '../components/CustomText';
+import globalStyles from '../constants/GlobalStyles';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export default function HomeScreen({ navigation, toggleTheme, isDarkMode }) {
+export default function Home({ navigation, toggleTheme, isDarkMode }) {
   const theme = useTheme();
   const { currentUser, logout } = useUser();
   const [loading, setLoading] = useState(true);
@@ -110,7 +110,7 @@ export default function HomeScreen({ navigation, toggleTheme, isDarkMode }) {
       <View style={globalStyles.bottomContainer}>
         <View style={globalStyles.wrapper}>
           <View style={globalStyles.btnContainer}>
-            <CustomButton onPress={() => navigation.navigate('Dashboard', { username: currentUser?.username })}>
+            <CustomButton onPress={() => navigation.navigate('Levels', { username: currentUser?.username })}>
               Let's Go! 🚀
             </CustomButton>
           </View>

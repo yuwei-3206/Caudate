@@ -8,7 +8,7 @@ const { errorHandler } = require('./middleware/errorMiddleware');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const MONGO_URI = 'mongodb+srv://yw829:Srkey11233206!@travel-mng.6qtlsr7.mongodb.net/?retryWrites=true&w=majority&appName=travel-mng';
+const MONGO_URI = '';
 
 // Connect to MongoDB
 mongoose.connect(MONGO_URI, {
@@ -20,7 +20,7 @@ mongoose.connect(MONGO_URI, {
 
 // Configure CORS
 const corsOptions = {
-    origin: 'http://10.0.0.176:3000',
+    origin: '',
     methods: ['GET', 'POST'],
     allowedHeaders: ['Content-Type', 'Authorization'],
 };

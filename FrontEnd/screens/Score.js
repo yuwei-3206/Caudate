@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { View, SafeAreaView, FlatList, StyleSheet, Alert } from "react-native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import CustomText from './CustomText';
-import CustomButton from './CustomButton';
-import globalStyles from '../GlobalStyles';
-import { useUser } from '../UserContext';
+import CustomText from '../components/CustomText';
+import CustomButton from '../components/CustomButton';
+import globalStyles from '../constants/GlobalStyles';
+import { useUser } from '../constants/UserContext';
 
 const Score = ({ navigation }) => {
   const [gameRecords, setGameRecords] = useState([]);

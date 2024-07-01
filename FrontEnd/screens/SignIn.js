@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { View, StyleSheet, TouchableOpacity, Alert, SafeAreaView } from "react-native";
 import { TextInput, useTheme } from 'react-native-paper';
-import { useUser } from '../UserContext';
-import CustomText from './CustomText';
-import CustomButton from './CustomButton';
-import globalStyles from '../GlobalStyles';
+import { useUser } from '../constants/UserContext';
+import CustomText from '../components/CustomText';
+import CustomButton from '../components/CustomButton';
+import globalStyles from '../constants/GlobalStyles';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export default function IntroScreen({ navigation }) {
+export default function SignIn({ navigation }) {
     const { selectUser, currentUser } = useUser();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -65,13 +65,13 @@ export default function IntroScreen({ navigation }) {
 
     const handleEnterAsGuest = () => {
         selectUser(null);
-        navigation.navigate('HomeScreen');
+        navigation.replace('Home');
     };
 
     useEffect(() => {
         if (currentUser) {
             console.log('Current User:', currentUser);
-            navigation.replace('HomeScreen');
+            navigation.replace('Home');
         }
     }, [currentUser]);
     

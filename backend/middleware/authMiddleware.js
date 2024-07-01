@@ -5,7 +5,6 @@ const authMiddleware = async (req, res, next) => {
     // Get token from header
     const token = req.header('Authorization')?.replace('Bearer ', '');
 
-    // Check if no token
     if (!token) {
         return res.status(401).json({ message: 'Authorization denied. No token provided.' });
     }
@@ -14,7 +13,7 @@ const authMiddleware = async (req, res, next) => {
         // Verify token
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-        // Find user by decoded ID (assuming you store user ID in token)
+        // Find user by decoded ID
         const user = await User.findById(decoded.id);
 
         if (!user) {

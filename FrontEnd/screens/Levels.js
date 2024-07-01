@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
 import { View, SafeAreaView, StyleSheet } from "react-native";
-import CustomButton from './CustomButton';
-import CustomText from './CustomText';
-import globalStyles from '../GlobalStyles';
+import CustomButton from '../components/CustomButton';
+import CustomText from '../components/CustomText';
+import globalStyles from '../constants/GlobalStyles';
 import { IconButton, useTheme } from 'react-native-paper';
-import { useUser } from '../UserContext';
+import { useUser } from '../constants/UserContext';
 
 export default function Levels({ navigation }) {
 
@@ -89,7 +89,7 @@ export default function Levels({ navigation }) {
               color={theme.colors.button.text}
               size={30}
               style={{ backgroundColor: theme.colors.button.background, borderRadius: 50 }}
-              onPress={() => navigation.navigate('HomeScreen')}
+              onPress={() => navigation.navigate('Home')}
           />
           <IconButton
             icon="trophy"

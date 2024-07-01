@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, SafeAreaView, FlatList } from 'react-native';
 import { useTheme } from 'react-native-paper';
-import CustomText from './CustomText';
-import CustomButton from './CustomButton';
-import globalStyles from '../GlobalStyles';
+import CustomText from '../components/CustomText';
+import CustomButton from '../components/CustomButton';
+import globalStyles from '../constants/GlobalStyles';
 
 const TopScoresScreen = ({ navigation, route }) => {
   const { level } = route.params;

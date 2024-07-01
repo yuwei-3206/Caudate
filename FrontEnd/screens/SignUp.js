@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { View, StyleSheet, TextInput, Alert } from "react-native";
-import CustomText from './CustomText';
-import CustomButton from './CustomButton';
+import CustomText from '../components/CustomText';
+import CustomButton from '../components/CustomButton';
 
 export default function SignUp({ navigation }) {
   const [username, setUsername] = useState('');

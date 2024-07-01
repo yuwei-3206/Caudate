@@ -2,17 +2,17 @@ import React, { useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Provider as PaperProvider } from 'react-native-paper';
-import { UserProvider } from './UserContext';
-import { lightTheme, darkTheme } from './Theme';
+import { UserProvider } from './constants/UserContext';
+import { lightTheme, darkTheme } from './constants/Theme';
 import { useFonts, Nunito_400Regular, Nunito_700Bold, Nunito_900Black } from '@expo-google-fonts/nunito';
 
-import IntroScreen from './components/IntroScreen';
-import HomeScreen from './components/HomeScreen';
-import Dashboard from './components/Dashboard';
-import Game from './components/Game';
-import Score from './components/Score';
-import SignUp from './components/SignUp';
-import TopScores from './components/TopScores';
+import SignIn from './screens/SignIn';
+import Home from './screens/Home';
+import Levels from './screens/Levels';
+import Game from './screens/Game';
+import Score from './screens/Score';
+import SignUp from './screens/SignUp';
+import TopScores from './screens/TopScores';
 
 const Stack = createNativeStackNavigator();
 
@@ -52,12 +52,12 @@ const AppNavigator = () => {
       <PaperProvider theme={selectedTheme}>
         <NavigationContainer theme={selectedTheme}>
           <Stack.Navigator initialRouteName="IntroScreen" screenOptions={{ headerShown: false }}>
-            <Stack.Screen name="IntroScreen" component={IntroScreen} />
+            <Stack.Screen name="SignIn" component={SignIn} />
             <Stack.Screen name="SignUp" component={SignUp} />
-            <Stack.Screen name="HomeScreen">
-              {props => <HomeScreen {...props} toggleTheme={toggleTheme} isDarkMode={isDarkMode} />}
+            <Stack.Screen name="Home">
+              {props => <Home {...props} toggleTheme={toggleTheme} isDarkMode={isDarkMode} />}
             </Stack.Screen>
-            <Stack.Screen name="Dashboard" component={Dashboard} />
+            <Stack.Screen name="Levels" component={Levels} />
             <Stack.Screen name="Game" component={Game} />
             <Stack.Screen name="Score" component={Score} />
             <Stack.Screen name="TopScores" component={TopScores} />

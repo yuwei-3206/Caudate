@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import { View, StyleSheet, SafeAreaView, Alert, TouchableOpacity } from "react-native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useUser } from '../UserContext';
-import CustomText from './CustomText';
-import globalStyles from '../GlobalStyles';
+import { useUser } from '../constants/UserContext';
+import CustomText from '../components/CustomText';
+import globalStyles from '../constants/GlobalStyles';
 import { IconButton, useTheme } from 'react-native-paper';
 
 const Game = ({ navigation, route }) => {
@@ -173,7 +173,7 @@ const Game = ({ navigation, route }) => {
               color={theme.colors.button.text}
               size={30}
               style={{ backgroundColor: theme.colors.button.background, borderRadius: 50 }}
-              onPress={() => navigation.navigate('HomeScreen')}
+              onPress={() => navigation.navigate('Home')}
             />
           <IconButton
             icon="earth"
